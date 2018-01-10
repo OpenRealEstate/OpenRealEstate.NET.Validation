@@ -1,0 +1,64 @@
+﻿using System;
+using FluentValidation.TestHelper;
+using OpenRealEstate.NET.Core;
+using OpenRealEstate.NET.Core.Land;
+using OpenRealEstate.NET.Validation.Land;
+using Xunit;
+
+namespace OpenRealEstate.NET.Validation.Tests.Land
+{
+    public class LandListingValidatorFacts
+    {
+        public LandListingValidatorFacts()
+        {
+            _validator = new LandListingValidator();
+        }
+
+        private readonly LandListingValidator _validator;
+
+        [Fact]
+        public void GivenACategoryType_Validate_ShouldNotHaveAValidationError()
+        {
+            _validator.ShouldNotHaveValidationErrorFor(listing => listing.CategoryType, CategoryType.Residential);
+        }
+
+        [Fact]
+        public void GivenAnAuctionOn_Validate_ShouldNotHaveAValidationError()
+        {
+            _validator.ShouldNotHaveValidationErrorFor(listing => listing.AuctionOn, DateTime.UtcNow);
+        }
+
+        [Fact]
+        public void GivenAnInvalidAuctionOn_Validate_ShouldHaveAValidationError()
+        {
+            _validator.ShouldHaveValidationErrorFor(listing => listing.AuctionOn, DateTime.MinValue);
+        }
+
+        [Fact]
+        public void GivenANullAuctionOn_Validate_ShouldNotHaveAValidationError()
+        {
+            _validator.ShouldNotHaveValidationErrorFor(listing => listing.AuctionOn, (DateTime?) null);
+        }
+
+        [Fact]
+        public void GivenAnUnknownCategoryType_Validate_ShouldHaveAValidationError()
+        {
+            _validator.ShouldNotHaveValidationErrorFor(listing => listing.CategoryType, CategoryType.Unknown);
+        }
+
+        [Fact]
+        public void GivenASalePricing_Validate_ShouldNotHaveAValidationError()
+        {
+            // Arrange.
+            var salePricing = new SalePricing
+            {
+                SalePrice = 1234,
+                SalePriceText = "Contact agent"
+            };
+
+            // Act & Assert.
+            _validator.ShouldHaveChildValidator(listing => listing.Pricing, typeof(SalePricingValidator));
+            _validator.ShouldNotHaveValidationErrorFor(listing => listing.Pricing, salePricing);
+        }
+    }
+}
