@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.27130.2020
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OpenRealEstate.Validation", "src\OpenRealEstate.Validation\OpenRealEstate.Validation.csproj", "{FDC175F6-5208-4755-9934-1FA6F9F0B8EA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OpenRealEstate.Validation.Tests", "tests\OpenRealEstate.Validation.Tests\OpenRealEstate.Validation.Tests.csproj", "{7C19C203-EC6D-4F05-9157-0E63E7B71282}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{FDC175F6-5208-4755-9934-1FA6F9F0B8EA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FDC175F6-5208-4755-9934-1FA6F9F0B8EA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FDC175F6-5208-4755-9934-1FA6F9F0B8EA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FDC175F6-5208-4755-9934-1FA6F9F0B8EA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7C19C203-EC6D-4F05-9157-0E63E7B71282}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7C19C203-EC6D-4F05-9157-0E63E7B71282}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7C19C203-EC6D-4F05-9157-0E63E7B71282}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7C19C203-EC6D-4F05-9157-0E63E7B71282}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {ED922DAC-4127-46B1-AD08-49612EB95121}
+	EndGlobalSection
+EndGlobal
