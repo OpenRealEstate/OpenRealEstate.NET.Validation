@@ -6,7 +6,7 @@ using OpenRealEstate.Core.Land;
 using OpenRealEstate.Core.Rental;
 using OpenRealEstate.Core.Residential;
 using OpenRealEstate.Core.Rural;
-using OpenRealEstate.Transmorgrifiers.RealestateComAu;
+using OpenRealEstate.Transmorgrifiers.RealEstateComAu;
 using Shouldly;
 
 namespace OpenRealEstate.Validation.Tests
