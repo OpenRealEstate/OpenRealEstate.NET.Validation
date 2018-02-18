@@ -1,12 +1,10 @@
-﻿using System;
-using System.IO;
-using System.Linq;
-using FluentValidation;
+﻿using FluentValidation;
 using FluentValidation.TestHelper;
 using OpenRealEstate.Core;
 using OpenRealEstate.Core.Rural;
 using OpenRealEstate.Validation.Rural;
 using Shouldly;
+using System;
 using Xunit;
 using RuralCategoryType = OpenRealEstate.Core.Rural.CategoryType;
 
