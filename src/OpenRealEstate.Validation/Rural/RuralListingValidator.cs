@@ -6,6 +6,20 @@ namespace OpenRealEstate.Validation.Rural
 {
     public class RuralListingValidator : ListingValidator<RuralListing>
     {
+        /// <summary>
+        /// Validates the following:
+        /// <para>
+        /// Minimum (Default):
+        /// - *Common Listing data
+        /// - AuctionOn
+        /// - Pricing
+        /// - BuildingDetails
+        /// </para>
+        /// <para>
+        /// Normal:
+        /// - CategoryType
+        /// </para>
+        /// </summary>
         public RuralListingValidator()
         {
             // Can have a NULL AuctionOn date. Just can't have a MinValue one.
@@ -17,7 +31,7 @@ namespace OpenRealEstate.Validation.Rural
             // Can have NULL building details. But if it's not NULL, then check it.
             RuleFor(listing => listing.BuildingDetails).SetValidator(new BuildingDetailsValidator());
 
-            RuleSet(NormalRuleSetKey, () => 
+            RuleSet(NormalRuleSetKey, () =>
                 RuleFor(listing => listing.CategoryType).NotEqual(CategoryType.Unknown));
         }
     }

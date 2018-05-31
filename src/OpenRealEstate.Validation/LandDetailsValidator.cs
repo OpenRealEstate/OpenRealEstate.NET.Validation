@@ -5,6 +5,15 @@ namespace OpenRealEstate.Validation
 {
     public class LandDetailsValidator : AbstractValidator<LandDetails>
     {
+        /// <summary>
+        /// Validates the following:
+        /// <para>
+        /// Minimum (Default):
+        /// - Area
+        /// - Frontage
+        /// - Depths
+        /// </para>
+        /// </summary>
         public LandDetailsValidator()
         {
             RuleFor(land => land.Area).SetValidator(new UnitOfMeasureValidator());

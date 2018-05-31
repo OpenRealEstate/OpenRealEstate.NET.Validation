@@ -6,6 +6,15 @@ namespace OpenRealEstate.Validation
 {
     public class SalePricingValidator : AbstractValidator<SalePricing>
     {
+        /// <summary>
+        /// Validates the following:
+        /// <para>
+        /// Minimum (Default):
+        /// - SalePrice
+        /// - SoldPrice (Optional)
+        /// - SoldOn (Optional) 
+        /// </para>
+        /// </summary>
         public SalePricingValidator()
         {
             // Required.
@@ -14,8 +23,10 @@ namespace OpenRealEstate.Validation
                 .GreaterThanOrEqualTo(0);
 
             // Optional.
-            RuleFor(salePricing => salePricing.SoldPrice).GreaterThanOrEqualTo(0);
-            RuleFor(salePricing => salePricing.SoldOn).NotEqual(DateTime.MinValue);
+            RuleFor(salePricing => salePricing.SoldPrice).GreaterThanOrEqualTo(0)
+                .When(salePricing => salePricing.SoldPrice.HasValue);
+            RuleFor(salePricing => salePricing.SoldOn).NotEqual(DateTime.MinValue)
+                .When(salePricing => salePricing.SoldOn.HasValue);
         }
     }
 }

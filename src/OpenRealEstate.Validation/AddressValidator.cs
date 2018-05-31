@@ -8,6 +8,17 @@ namespace OpenRealEstate.Validation
     {
         public static string RuleLocationNames = "LocationNames";
 
+        /// <summary>
+        /// Validates the following:
+        /// <para>
+        /// Minimum (Default):
+        /// - Street
+        /// - Suburb
+        /// - State
+        /// - CountryIsoCode
+        /// - Postcode
+        /// </para>
+        /// </summary>
         public AddressValidator()
         {
             // Cannot have a street number/lot and no street name.

@@ -6,6 +6,14 @@ namespace OpenRealEstate.Validation.Land
 {
     public class LandListingValidator : ListingValidator<LandListing>
     {
+        /// <summary>
+        /// Validates the following:
+        /// <para>
+        /// Minimum (Default):
+        /// - *Common Listing data
+        /// - AuctionOn
+        /// - Pricing</para>
+        /// </summary>
         public LandListingValidator()
         {
             // Can have a NULL AuctionOn date. Just can't have a MinValue one.

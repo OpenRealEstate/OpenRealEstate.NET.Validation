@@ -5,6 +5,13 @@ namespace OpenRealEstate.Validation
 {
     public class FeaturesValidator : AbstractValidator<Features>
     {
+        /// <summary>
+        /// Validates the following:
+        /// <para>
+        /// Minimum (Default):
+        /// - CarParking
+        /// </para>
+        /// </summary>
         public FeaturesValidator()
         {
             RuleFor(feature => feature.CarParking).SetValidator(new CarParkingValidator());

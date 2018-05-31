@@ -5,6 +5,14 @@ namespace OpenRealEstate.Validation
 {
     public class UnitOfMeasureValidator : AbstractValidator<UnitOfMeasure>
     {
+        /// <summary>
+        /// Validates the following:
+        /// <para>
+        /// Minimum (Default):
+        /// - Value
+        /// - Type
+        /// </para>
+        /// </summary>
         public UnitOfMeasureValidator()
         {
             RuleFor(unit => unit.Value).GreaterThanOrEqualTo(0);

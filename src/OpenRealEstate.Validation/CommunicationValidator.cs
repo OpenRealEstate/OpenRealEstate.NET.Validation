@@ -5,6 +5,14 @@ namespace OpenRealEstate.Validation
 {
     public class CommunicationValidator : AbstractValidator<Communication>
     {
+        /// <summary>
+        /// Validates the following:
+        /// <para>
+        /// Minimum (Default):
+        /// - CommunicationType
+        /// - Details
+        /// </para>
+        /// </summary>
         public CommunicationValidator()
         {
             RuleFor(communication => communication.CommunicationType).NotEqual(CommunicationType.Unknown)

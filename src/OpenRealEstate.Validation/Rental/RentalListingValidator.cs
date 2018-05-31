@@ -7,6 +7,20 @@ namespace OpenRealEstate.Validation.Rental
 {
     public class RentalListingValidator : ListingValidator<RentalListing>
     {
+        /// <summary>
+        /// Validates the following:
+        /// <para>
+        /// Minimum (Default):
+        /// - *Common Listing data
+        /// - AvailableOn
+        /// - BuildingDetails
+        /// </para>
+        /// <para>
+        /// Normal:
+        /// - PropertyType
+        /// - Pricing
+        /// </para>
+        /// </summary>
         public RentalListingValidator()
         {
             // Can have a NULL AvailableOn date. Just can't have a MinValue one.

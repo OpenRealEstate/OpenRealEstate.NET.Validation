@@ -6,6 +6,14 @@ namespace OpenRealEstate.Validation
 {
     public class InspectionValidator : AbstractValidator<Inspection>
     {
+        /// <summary>
+        /// Validates the following:
+        /// <para>
+        /// Minimum (Default):
+        /// - OpensOn
+        /// - ClosesOn
+        /// </para>
+        /// </summary>
         public InspectionValidator()
         {
             RuleFor(inspection => inspection.OpensOn).NotEqual(DateTime.MinValue)

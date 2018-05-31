@@ -7,6 +7,20 @@ namespace OpenRealEstate.Validation.Residential
 {
     public class ResidentialListingValidator : ListingValidator<ResidentialListing>
     {
+        /// <summary>
+        /// Validates the following:
+        /// <para>
+        /// Minimum (Default):
+        /// - *Common Listing data
+        /// - AuctionOn
+        /// - BuildingDetails
+        /// </para>
+        /// <para>
+        /// Normal:
+        /// - PropertyType
+        /// - Pricing
+        /// </para>
+        /// </summary>
         public ResidentialListingValidator()
         {
             // Can have a NULL Auction date. Just can't have a MinValue one.
@@ -21,7 +35,7 @@ namespace OpenRealEstate.Validation.Residential
                 RuleFor(listing => listing.PropertyType).NotEqual(PropertyType.Unknown)
                     .WithMessage("Invalid 'PropertyType'. Please choose any property except Unknown.");
                 
-                RuleFor(listing => listing.Pricing).SetValidator(new SalePricingValidator());    
+                RuleFor(listing => listing.Pricing).SetValidator(new SalePricingValidator());
             });
         }
     }

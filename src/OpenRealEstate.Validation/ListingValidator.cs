@@ -1,7 +1,7 @@
-﻿using System;
-using System.Linq;
-using FluentValidation;
+﻿using FluentValidation;
 using OpenRealEstate.Core;
+using System;
+using System.Linq;
 
 namespace OpenRealEstate.Validation
 {
@@ -12,6 +12,31 @@ namespace OpenRealEstate.Validation
         protected const string NormalRuleSetKey = "Normal";
         protected const string StrictRuleSetKey = "Strict";
 
+        /// <summary>
+        /// Validates the following:
+        /// <para>
+        /// Minimum (Default):
+        /// - *Common data
+        /// - AgencyId
+        /// - StatusType
+        /// - CreatedOn
+        /// </para>
+        /// <para>
+        /// Normal:
+        /// - Title
+        /// - Address
+        /// - Agents
+        /// - Images
+        /// - Flooplans
+        /// - Videos
+        /// - Inspections
+        /// - LandDetails
+        /// - Features
+        /// </para>
+        /// <para>
+        /// Strict:
+        /// - Links (Optional)</para>
+        /// </summary>
         public ListingValidator()
         {
             ValidatorOptions.CascadeMode = CascadeMode.StopOnFirstFailure;
@@ -53,8 +78,7 @@ namespace OpenRealEstate.Validation
                         // Required where it exists.
                         RuleForEach(listing => listing.Links)
                             .Must(LinkMustBeAUri)
-                            .When(listing => listing.Links != null &&
-                                             listing.Links.Any())
+                            .When(listing => listing.Links?.Any() == true)
                             .WithMessage("Link '{PropertyValue}' must be a valid URI. eg: http://www.SomeWebSite.com.au");
                     });
         }

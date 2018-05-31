@@ -6,6 +6,14 @@ namespace OpenRealEstate.Validation
 {
     public class AggregateRootValidator<T> : AbstractValidator<T> where  T : AggregateRoot
     {
+        /// <summary>
+        /// Validates the following:
+        /// <para>
+        /// Minimum (Default):
+        /// - Id
+        /// - UpdatedOn
+        /// </para>
+        /// </summary>
         public AggregateRootValidator()
         {
             RuleFor(aggregateRoot => aggregateRoot.Id).NotEmpty()
