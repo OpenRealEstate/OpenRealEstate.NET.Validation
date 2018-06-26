@@ -1,15 +1,15 @@
-﻿using System;
-using FluentValidation.TestHelper;
+﻿using FluentValidation.TestHelper;
 using OpenRealEstate.Core;
 using OpenRealEstate.Core.Land;
 using OpenRealEstate.Validation.Land;
+using System;
 using Xunit;
 
 namespace OpenRealEstate.Validation.Tests.Land
 {
-    public class LandListingValidatorFacts
+    public class LandListingValidatorTests
     {
-        public LandListingValidatorFacts()
+        public LandListingValidatorTests()
         {
             _validator = new LandListingValidator();
         }
@@ -55,6 +55,17 @@ namespace OpenRealEstate.Validation.Tests.Land
                 SalePrice = 1234,
                 SalePriceText = "Contact agent"
             };
+
+            // Act & Assert.
+            _validator.ShouldHaveChildValidator(listing => listing.Pricing, typeof(SalePricingValidator));
+            _validator.ShouldNotHaveValidationErrorFor(listing => listing.Pricing, salePricing);
+        }
+
+        [Fact]
+        public void GivenNoSalePricing_Validate_ShouldNotHaveAValidationError()
+        {
+            // Arrange.
+            SalePricing salePricing = null;
 
             // Act & Assert.
             _validator.ShouldHaveChildValidator(listing => listing.Pricing, typeof(SalePricingValidator));

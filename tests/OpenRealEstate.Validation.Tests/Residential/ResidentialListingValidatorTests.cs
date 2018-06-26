@@ -171,7 +171,7 @@ namespace OpenRealEstate.Validation.Tests.Residential
                 var result = validator.Validate(listing, ruleSet: ResidentialListingValidator.NormalRuleSet);
 
                 // Assert.
-                result.Errors.Count.ShouldBe(3);
+                result.Errors.Count.ShouldBe(4);
             }
 
             [Fact]

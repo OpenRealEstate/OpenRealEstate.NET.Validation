@@ -34,7 +34,7 @@ namespace OpenRealEstate.Validation.Residential
                 // Required.
                 RuleFor(listing => listing.PropertyType).NotEqual(PropertyType.Unknown)
                     .WithMessage("Invalid 'PropertyType'. Please choose any property except Unknown.");
-                
+
                 RuleFor(listing => listing.Pricing).SetValidator(new SalePricingValidator());
             });
         }

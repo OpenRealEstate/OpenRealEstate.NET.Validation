@@ -8,7 +8,7 @@ using Xunit;
 
 namespace OpenRealEstate.Validation.Tests.Rental
 {
-    public class RentalListingValidatorFacts
+    public class RentalListingValidatorTests
     {
         public class SimpleValidationFacts
         {

@@ -1,13 +1,13 @@
-﻿using System;
-using System.IO;
-using System.Linq;
-using OpenRealEstate.Core;
+﻿using OpenRealEstate.Core;
 using OpenRealEstate.Core.Land;
 using OpenRealEstate.Core.Rental;
 using OpenRealEstate.Core.Residential;
 using OpenRealEstate.Core.Rural;
 using OpenRealEstate.Transmorgrifiers.RealEstateComAu;
 using Shouldly;
+using System;
+using System.IO;
+using System.Linq;
 
 namespace OpenRealEstate.Validation.Tests
 {
@@ -47,7 +47,7 @@ namespace OpenRealEstate.Validation.Tests
         {
             fileName.ShouldNotBeNullOrEmpty();
 
-            var reaXml = File.ReadAllText($"{SamplesDirectoryPath}{fileName}");
+            var reaXml = File.ReadAllText(SamplesDirectoryPath + fileName);
             var reaXmlTransmorgrifier = new ReaXmlTransmorgrifier();
             return (T) reaXmlTransmorgrifier.Parse(reaXml)
                                             .Listings

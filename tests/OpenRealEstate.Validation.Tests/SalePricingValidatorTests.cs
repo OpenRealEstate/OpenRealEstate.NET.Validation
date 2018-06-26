@@ -1,5 +1,5 @@
-﻿using System;
-using FluentValidation.TestHelper;
+﻿using FluentValidation.TestHelper;
+using System;
 using Xunit;
 
 namespace OpenRealEstate.Validation.Tests
@@ -13,16 +13,22 @@ namespace OpenRealEstate.Validation.Tests
 
         private readonly SalePricingValidator _salePricingValidator;
 
-        [Fact]
-        public void GivenANegativeSalePrice_Validate_ShouldHaveAValidationError()
+        [Theory]
+        [InlineData(0)]
+        [InlineData(-1)]
+        [InlineData(int.MinValue)]
+        public void GivenAnInvalidSalePrice_Validate_ShouldHaveAValidationError(int salePrice)
         {
-            _salePricingValidator.ShouldHaveValidationErrorFor(salePrice => salePrice.SalePrice, -1);
+            _salePricingValidator.ShouldHaveValidationErrorFor(salePricing => salePricing.SalePrice, salePrice);
         }
 
-        [Fact]
-        public void GivenANegativeSoldPrice_Validate_ShouldHaveAValidationError()
+        [Theory]
+        [InlineData(0)]
+        [InlineData(-1)]
+        [InlineData(int.MinValue)]
+        public void GivenAnInvalidSoldPrice_Validate_ShouldHaveAValidationError(int soldPrice)
         {
-            _salePricingValidator.ShouldHaveValidationErrorFor(salePrice => salePrice.SoldPrice, -1);
+            _salePricingValidator.ShouldHaveValidationErrorFor(salePricing => salePricing.SoldPrice, soldPrice);
         }
 
         [Fact]
@@ -31,10 +37,12 @@ namespace OpenRealEstate.Validation.Tests
             _salePricingValidator.ShouldHaveValidationErrorFor(salePrice => salePrice.SoldOn, DateTime.MinValue);
         }
 
-        [Fact]
-        public void GivenASalePrice_Validate_ShouldNotHaveAValidationError()
+        [Theory]
+        [InlineData(1)]
+        [InlineData(int.MaxValue)]
+        public void GivenASalePrice_Validate_ShouldNotHaveAValidationError(int salePrice)
         {
-            _salePricingValidator.ShouldNotHaveValidationErrorFor(salePricing => salePricing.SalePrice, 1);
+            _salePricingValidator.ShouldNotHaveValidationErrorFor(salePricing => salePricing.SalePrice, salePrice);
         }
 
         [Fact]
@@ -43,10 +51,12 @@ namespace OpenRealEstate.Validation.Tests
             _salePricingValidator.ShouldNotHaveValidationErrorFor(salePrice => salePrice.SoldOn, DateTime.UtcNow);
         }
 
-        [Fact]
-        public void GivenASoldPrice_Validate_ShouldNotHaveAValidationError()
+        [Theory]
+        [InlineData(1)]
+        [InlineData(int.MaxValue)]
+        public void GivenASoldPrice_Validate_ShouldNotHaveAValidationError(int soldPrice)
         {
-            _salePricingValidator.ShouldNotHaveValidationErrorFor(salePrice => salePrice.SoldPrice, 1);
+            _salePricingValidator.ShouldNotHaveValidationErrorFor(salePrice => salePrice.SoldPrice, soldPrice);
         }
 
         [Fact]

@@ -15,13 +15,11 @@ namespace OpenRealEstate.Validation
 {
     public static class ValidatorMediator
     {
-        public static ValidationResult Validate(Listing listing, ListingValidatorRuleSet ruleSet)
+        public static ValidationResult Validate(Listing listing, 
+                                                ListingValidatorRuleSet ruleSet = ListingValidatorRuleSet.Normal)
         {
-            return Validate(listing, ruleSet.ToDescription());
-        }
+            var ruleSetKey = ruleSet.ToDescription();
 
-        public static ValidationResult Validate(Listing listing, string ruleSet = null)
-        {
             if (listing == null)
             {
                 throw new ArgumentNullException();
@@ -29,22 +27,22 @@ namespace OpenRealEstate.Validation
 
             if (listing is ResidentialListing residentialListing)
             {
-                return Validate(residentialListing, ruleSet);
+                return Validate(residentialListing, ruleSetKey);
             }
 
             if (listing is RentalListing rentalListing)
             {
-                return Validate(rentalListing, ruleSet);
+                return Validate(rentalListing, ruleSetKey);
             }
 
             if (listing is RuralListing ruralListing)
             {
-                return Validate(ruralListing, ruleSet);
+                return Validate(ruralListing, ruleSetKey);
             }
 
             if (listing is LandListing landListing)
             {
-                return Validate(landListing, ruleSet);
+                return Validate(landListing, ruleSetKey);
             }
 
             var errorMessage =

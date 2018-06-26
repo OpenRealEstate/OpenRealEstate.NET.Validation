@@ -20,10 +20,10 @@ namespace OpenRealEstate.Validation
             // Required.
             RuleFor(salePricing => salePricing.SalePrice)
                 .NotNull()
-                .GreaterThanOrEqualTo(0);
+                .GreaterThanOrEqualTo(1);
 
             // Optional.
-            RuleFor(salePricing => salePricing.SoldPrice).GreaterThanOrEqualTo(0)
+            RuleFor(salePricing => salePricing.SoldPrice).GreaterThanOrEqualTo(1)
                 .When(salePricing => salePricing.SoldPrice.HasValue);
             RuleFor(salePricing => salePricing.SoldOn).NotEqual(DateTime.MinValue)
                 .When(salePricing => salePricing.SoldOn.HasValue);

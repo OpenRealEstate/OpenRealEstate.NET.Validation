@@ -1,0 +1,73 @@
+﻿using FluentValidation;
+using OpenRealEstate.Core.Rural;
+using OpenRealEstate.Validation.Rural;
+using Shouldly;
+using System;
+using Xunit;
+
+namespace OpenRealEstate.Validation.Tests.Rural
+{
+    public class RuleSetTests : TestBase
+    {
+        [Fact]
+        public void GivenAListingAndADefaultRuleSet_Validate_ShouldHaveNotHaveAnyValidationErrors()
+        {
+            // Arrange.
+            var listing = GetListing<RuralListing>("Rural\\REA-Rural-Withdrawn.xml");
+            var validator = new RuralListingValidator();
+
+            // Act.
+            var result = validator.Validate(listing);
+
+            // Assert.
+            result.Errors.Count.ShouldBe(0);
+        }
+
+        [Fact]
+        public void GivenAMinimumRuleSet_Validate_ShouldNotHaveAnyValidationErrors()
+        {
+            // Arrange.
+            var listing = GetListing<RuralListing>();
+            var validator = new RuralListingValidator();
+
+            // Act.
+            var result = validator.Validate(listing,
+                                            ruleSet: RuralListingValidator.NormalRuleSet);
+
+            // Assert.
+            result.Errors.Count.ShouldBe(0);
+        }
+
+        [Fact]
+        public void GivenAnAuctionDataAndACommonRuleSet_Validate_ShouldNotHaveAnyValidationErrors()
+        {
+            // Arrange.
+            var listing = GetListing<RuralListing>();
+            var validator = new RuralListingValidator();
+            listing.AuctionOn = DateTime.UtcNow;
+
+            // Act.
+            var result = validator.Validate(listing,
+                                            ruleSet: RuralListingValidator.NormalRuleSet);
+
+            // Assert.
+            result.Errors.Count.ShouldBe(0);
+        }
+
+        [Fact]
+        public void GivenAnInvalidAuctionDataAndACommonRuleSet_Validate_ShouldNotHaveAnyValidationErrors()
+        {
+            // Arrange.
+            var listing = GetListing<RuralListing>();
+            var validator = new RuralListingValidator();
+            listing.AuctionOn = DateTime.UtcNow;
+
+            // Act.
+            var result = validator.Validate(listing,
+                                            ruleSet: RuralListingValidator.NormalRuleSet);
+
+            // Assert.
+            result.Errors.Count.ShouldBe(0);
+        }
+    }
+}

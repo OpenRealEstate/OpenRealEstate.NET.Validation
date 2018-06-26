@@ -15,7 +15,10 @@ namespace OpenRealEstate.Validation.Rental
         /// </summary>
         public RentalPricingValidator()
         {
-            RuleFor(rentalPricing => rentalPricing.RentalPrice).GreaterThanOrEqualTo(0);
+            // We always need to have a rental price.
+            RuleFor(rentalPricing => rentalPricing.RentalPrice).GreaterThanOrEqualTo(1);
+
+            // Bond is optional. If there's a price, it needs to be a positive value.
             RuleFor(rentalPricing => rentalPricing.Bond).GreaterThanOrEqualTo(0);
 
             // NOTE: We might not have a Payment frequency type, so Unknown is allowed.
