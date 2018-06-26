@@ -19,49 +19,74 @@ namespace OpenRealEstate.Validation
         {
             return Validate(listing, ruleSet.ToDescription());
         }
-        
-        public static ValidationResult Validate(Listing listing, string ruleSet = ResidentialListingValidator.NormalRuleSet)
+
+        public static ValidationResult Validate(Listing listing, string ruleSet = null)
         {
             if (listing == null)
             {
                 throw new ArgumentNullException();
             }
 
-            if (listing is ResidentialListing)
+            if (listing is ResidentialListing residentialListing)
             {
-                var validator = new ResidentialListingValidator();
-                return string.IsNullOrWhiteSpace(ruleSet)
-                    ? validator.Validate((ResidentialListing)listing)
-                    : validator.Validate((ResidentialListing)listing, ruleSet: ruleSet);
+                return Validate(residentialListing, ruleSet);
             }
 
-            if (listing is RentalListing)
+            if (listing is RentalListing rentalListing)
             {
-                var validator = new RentalListingValidator();
-                return string.IsNullOrWhiteSpace(ruleSet)
-                    ? validator.Validate((RentalListing) listing)
-                    : validator.Validate((RentalListing) listing, ruleSet: ruleSet);
+                return Validate(rentalListing, ruleSet);
             }
 
-            if (listing is RuralListing)
+            if (listing is RuralListing ruralListing)
             {
-                var validator = new RuralListingValidator();
-                return string.IsNullOrWhiteSpace(ruleSet)
-                    ? validator.Validate((RuralListing) listing)
-                    : validator.Validate((RuralListing) listing, ruleSet: ruleSet);
+                return Validate(ruralListing, ruleSet);
             }
 
-            if (listing is LandListing)
+            if (listing is LandListing landListing)
             {
-                var validator = new LandListingValidator();
-                return string.IsNullOrWhiteSpace(ruleSet)
-                    ? validator.Validate((LandListing) listing)
-                    : validator.Validate((LandListing) listing, ruleSet: ruleSet);
+                return Validate(landListing, ruleSet);
             }
 
             var errorMessage =
                 $"Tried to validate an unhandled Listing type: {listing.GetType()}. Only Residental, Rental, Rural and Land listing types are supported.";
             throw new Exception(errorMessage);
         }
+
+        public static ValidationResult Validate(ResidentialListing residentialListing, 
+                                                string ruleSet = ResidentialListingValidator.NormalRuleSet)
+        {
+            var validator = new ResidentialListingValidator();
+            return string.IsNullOrWhiteSpace(ruleSet)
+                ? validator.Validate(residentialListing)
+                : validator.Validate(residentialListing, ruleSet: ruleSet);
+        }
+
+        public static ValidationResult Validate(RentalListing rentalListing, 
+                                                string ruleSet = RentalListingValidator.NormalRuleSet)
+        {
+            var validator = new RentalListingValidator();
+            return string.IsNullOrWhiteSpace(ruleSet)
+                ? validator.Validate(rentalListing)
+                : validator.Validate(rentalListing, ruleSet: ruleSet);
+        }
+
+        public static ValidationResult Validate(RuralListing ruralListing, 
+                                                string ruleSet = RuralListingValidator.NormalRuleSet)
+        {
+            var validator = new RuralListingValidator();
+            return string.IsNullOrWhiteSpace(ruleSet)
+                ? validator.Validate(ruralListing)
+                : validator.Validate(ruralListing, ruleSet: ruleSet);
+        }
+
+        public static ValidationResult Validate(LandListing landListing, 
+                                                string ruleSet = ResidentialListingValidator.NormalRuleSet)
+        {
+            var validator = new LandListingValidator();
+            return string.IsNullOrWhiteSpace(ruleSet)
+                ? validator.Validate(landListing)
+                : validator.Validate(landListing, ruleSet: ruleSet);
+        }
+
     }
 }
