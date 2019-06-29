@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
@@ -285,8 +285,8 @@ namespace OpenRealEstate.Validation.Tests.Residential
                 result.Errors.ShouldContain(x => x.ErrorMessage == $"Link '{uri}' must be a valid URI. eg: http://www.SomeWebSite.com.au");
             }
 
-            [Fact(Skip = "Shouldly doesn't like ReadOnlyCollections")]
-            public void GivenAFewLinksThatAreUrisAndTheMinimumRuleSet_Validate_ShouldNotHaveValidationErrors()
+            //[Fact(Skip = "Shouldly doesn't like ReadOnlyCollections")]
+            [Fact]public void GivenAFewLinksThatAreUrisAndTheMinimumRuleSet_Validate_ShouldNotHaveValidationErrors()
             {
                 // Arrange.
                 var validator = new ResidentialListingValidator();
@@ -298,13 +298,12 @@ namespace OpenRealEstate.Validation.Tests.Residential
                 };
 
                 // Act & Assert.
-                // This fails because shouldly doesn't like ReadOnly collections.
-                //validator.ShouldNotHaveValidationErrorFor(listing => listing.Links,
-                //    links.AsReadOnly(),
-                //    ResidentialListingValidator.NormalRuleSet);
+                validator.ShouldNotHaveValidationErrorFor(listing => listing.Links,
+                                                          links,
+                                                          ResidentialListingValidator.NormalRuleSet);
             }
 
-            [Fact(Skip = "Shouldly doesn't like ReadOnlyCollections")]
+            [Fact]
             public void GivenAFewLinksThatAreUrisButOneIsInvalidAndTheMinimumRuleSet_Validate_ShouldNotHaveValidationErrors()
             {
                 // Arrange.
@@ -318,10 +317,9 @@ namespace OpenRealEstate.Validation.Tests.Residential
                 };
 
                 // Act & Assert.
-                // This fails because shouldly doesn't like ReadOnly collections.
-                validator.ShouldHaveValidationErrorFor(listing => listing.Links.ToList(),
-                                                       links,
-                                                       ResidentialListingValidator.NormalRuleSet);
+                validator.ShouldNotHaveValidationErrorFor(listing => listing.Links,
+                                                          links,
+                                                          ResidentialListingValidator.NormalRuleSet);
             }
 
             [Fact]

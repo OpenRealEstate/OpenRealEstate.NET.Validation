@@ -1,4 +1,4 @@
-﻿using FluentValidation;
+using FluentValidation;
 using OpenRealEstate.Core;
 using System;
 using System.Linq;
@@ -62,11 +62,11 @@ namespace OpenRealEstate.Validation
                         RuleFor(listing => listing.Address).NotNull().SetValidator(new AddressValidator());
 
                         // Required where it exists.
-                        RuleFor(listing => listing.Agents).SetCollectionValidator(new AgentValidator());
-                        RuleFor(listing => listing.Images).SetCollectionValidator(new MediaValidator());
-                        RuleFor(listing => listing.FloorPlans).SetCollectionValidator(new MediaValidator());
-                        RuleFor(listing => listing.Videos).SetCollectionValidator(new MediaValidator());
-                        RuleFor(listing => listing.Inspections).SetCollectionValidator(new InspectionValidator());
+                        RuleForEach(listing => listing.Agents).SetValidator(new AgentValidator());
+                        RuleForEach(listing => listing.Images).SetValidator(new MediaValidator());
+                        RuleForEach(listing => listing.FloorPlans).SetValidator(new MediaValidator());
+                        RuleForEach(listing => listing.Videos).SetValidator(new MediaValidator());
+                        RuleForEach(listing => listing.Inspections).SetValidator(new InspectionValidator());
                         RuleFor(listing => listing.LandDetails).SetValidator(new LandDetailsValidator());
                         RuleFor(listing => listing.Features).SetValidator(new FeaturesValidator());
                     });

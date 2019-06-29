@@ -1,4 +1,4 @@
-﻿using FluentValidation;
+using FluentValidation;
 using OpenRealEstate.Core;
 
 namespace OpenRealEstate.Validation
@@ -18,7 +18,7 @@ namespace OpenRealEstate.Validation
         {
             RuleFor(land => land.Area).SetValidator(new UnitOfMeasureValidator());
             RuleFor(land => land.Frontage).SetValidator(new UnitOfMeasureValidator());
-            RuleFor(land => land.Depths).SetCollectionValidator(new UnitOfMeasureValidator());
+            RuleForEach(land => land.Depths).SetValidator(new UnitOfMeasureValidator());
         }
     }
 }
