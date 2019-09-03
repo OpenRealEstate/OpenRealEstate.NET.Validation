@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using FluentValidation;
 using OpenRealEstate.Core;
 
@@ -23,9 +23,12 @@ namespace OpenRealEstate.Validation
                 .GreaterThanOrEqualTo(1);
 
             // Optional.
-            RuleFor(salePricing => salePricing.SoldPrice).GreaterThanOrEqualTo(1)
+            RuleFor(salePricing => salePricing.SoldPrice)
+                .GreaterThanOrEqualTo(1)
                 .When(salePricing => salePricing.SoldPrice.HasValue);
-            RuleFor(salePricing => salePricing.SoldOn).NotEqual(DateTime.MinValue)
+
+            RuleFor(salePricing => (DateTime)salePricing.SoldOn)
+                .SetValidator(new ListingDateTimeValidator())
                 .When(salePricing => salePricing.SoldOn.HasValue);
         }
     }

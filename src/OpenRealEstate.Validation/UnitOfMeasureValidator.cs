@@ -1,4 +1,4 @@
-﻿using FluentValidation;
+using FluentValidation;
 using OpenRealEstate.Core;
 
 namespace OpenRealEstate.Validation
@@ -15,9 +15,11 @@ namespace OpenRealEstate.Validation
         /// </summary>
         public UnitOfMeasureValidator()
         {
-            RuleFor(unit => unit.Value).GreaterThanOrEqualTo(0);
+            RuleFor(unit => unit.Value)
+                .GreaterThanOrEqualTo(0);
 
-            RuleFor(unit => unit.Type).NotNull()
+            RuleFor(unit => unit.Type)
+                .NotNull()
                 .When(unit => unit.Value > 0)
                 .WithMessage("If a unit of measure's 'Value' is provided, then a 'Type' also needs to be provided.");
         }

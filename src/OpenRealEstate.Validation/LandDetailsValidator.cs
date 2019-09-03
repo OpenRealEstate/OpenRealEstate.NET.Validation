@@ -16,9 +16,14 @@ namespace OpenRealEstate.Validation
         /// </summary>
         public LandDetailsValidator()
         {
-            RuleFor(land => land.Area).SetValidator(new UnitOfMeasureValidator());
-            RuleFor(land => land.Frontage).SetValidator(new UnitOfMeasureValidator());
-            RuleForEach(land => land.Depths).SetValidator(new UnitOfMeasureValidator());
+            RuleFor(land => land.Area)
+                .SetValidator(new UnitOfMeasureValidator());
+
+            RuleFor(land => land.Frontage)
+                .SetValidator(new UnitOfMeasureValidator());
+
+            RuleForEach(land => land.Depths)
+                .SetValidator(new UnitOfMeasureValidator());
         }
     }
 }

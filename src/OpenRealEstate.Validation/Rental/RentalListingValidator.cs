@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using FluentValidation;
 using OpenRealEstate.Core;
 using OpenRealEstate.Core.Rental;
@@ -24,7 +24,8 @@ namespace OpenRealEstate.Validation.Rental
         public RentalListingValidator()
         {
             // Can have a NULL AvailableOn date. Just can't have a MinValue one.
-            RuleFor(listing => listing.AvailableOn).NotEqual(DateTime.MinValue);
+            RuleFor(listing => (DateTime)listing.AvailableOn).SetValidator(new ListingDateTimeValidator())
+                .When(listing => listing.AvailableOn.HasValue);
 
             // Can have NULL building details. But if it's not NULL, then check it.
             RuleFor(listing => listing.BuildingDetails).SetValidator(new BuildingDetailsValidator());

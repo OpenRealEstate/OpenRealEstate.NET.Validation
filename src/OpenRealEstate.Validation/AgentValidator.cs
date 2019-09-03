@@ -16,7 +16,8 @@ namespace OpenRealEstate.Validation
         public AgentValidator()
         {
             RuleFor(agent => agent.Name).NotEmpty();
-            RuleForEach(agent => agent.Communications).SetValidator(new CommunicationValidator());
+            RuleForEach(agent => agent.Communications)
+                .SetValidator(new CommunicationValidator());
         }
     }
 }

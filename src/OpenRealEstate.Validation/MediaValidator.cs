@@ -1,4 +1,4 @@
-﻿using FluentValidation;
+using FluentValidation;
 using OpenRealEstate.Core;
 
 namespace OpenRealEstate.Validation
@@ -15,8 +15,12 @@ namespace OpenRealEstate.Validation
         /// </summary>
         public MediaValidator()
         {
-            RuleFor(media => media.Url).NotEmpty();
-            RuleFor(media => media.Order).NotEmpty().GreaterThan(0);
+            RuleFor(media => media.Url)
+                .NotEmpty();
+
+            RuleFor(media => media.Order)
+                .NotEmpty()
+                .GreaterThan(0);
         }
     }
 }

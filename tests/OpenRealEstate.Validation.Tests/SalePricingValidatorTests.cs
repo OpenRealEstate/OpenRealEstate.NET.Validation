@@ -1,4 +1,6 @@
-﻿using FluentValidation.TestHelper;
+using FluentValidation.TestHelper;
+using OpenRealEstate.Core;
+using Shouldly;
 using System;
 using Xunit;
 

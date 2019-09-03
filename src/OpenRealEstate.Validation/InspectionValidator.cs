@@ -1,4 +1,3 @@
-﻿using System;
 using FluentValidation;
 using OpenRealEstate.Core;
 
@@ -16,14 +15,13 @@ namespace OpenRealEstate.Validation
         /// </summary>
         public InspectionValidator()
         {
-            RuleFor(inspection => inspection.OpensOn).NotEqual(DateTime.MinValue)
-                .WithMessage(
-                    "The Date/Time value is illegal. Please use a valid value, which is a more current value .. like .. something from this century, please.");
+            RuleFor(inspection => inspection.OpensOn)
+                .SetValidator(new ListingDateTimeValidator());
 
-            RuleFor(inspection => inspection.ClosesOn).NotEqual(DateTime.MinValue)
+            RuleFor(inspection => inspection.ClosesOn)
+                .Must((inspection, closesOn) => closesOn > inspection.OpensOn)
                 .When(inspection => inspection.ClosesOn.HasValue)
-                .WithMessage(
-                    "The Date/Time value is illegal. Please use a valid value, which is a more current value .. like .. something from this century, please, or a NULL value (ie. Not sure when it closes on).");
+                .WithMessage("The Date/Time value is illegal. Please use a valid value which is -after- the 'OpensOn' value or a NULL value if you're not sure when it closes on).");
         }
     }
 }

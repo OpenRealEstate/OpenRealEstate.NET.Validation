@@ -1,4 +1,4 @@
-﻿using FluentValidation;
+using FluentValidation;
 using OpenRealEstate.Core;
 
 namespace OpenRealEstate.Validation
@@ -15,8 +15,12 @@ namespace OpenRealEstate.Validation
         /// </summary>
         public BuildingDetailsValidator()
         {
-            RuleFor(building => building.Area).SetValidator(new UnitOfMeasureValidator());
-            RuleFor(building => building.EnergyRating).GreaterThan(0).LessThanOrEqualTo(10);
+            RuleFor(building => building.Area)
+                .SetValidator(new UnitOfMeasureValidator());
+
+            RuleFor(building => building.EnergyRating)
+                .GreaterThan(0)
+                .LessThanOrEqualTo(10);
         }
     }
 }

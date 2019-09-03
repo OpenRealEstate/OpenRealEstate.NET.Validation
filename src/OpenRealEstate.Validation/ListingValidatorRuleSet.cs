@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using OpenRealEstate.Core.Residential;
 
 namespace OpenRealEstate.Validation
@@ -34,8 +34,7 @@ namespace OpenRealEstate.Validation
                 case ListingValidatorRuleSet.Strict:
                     return ListingValidator<ResidentialListing>.StrictRuleSet;
                 default:
-                    throw new NotImplementedException(
-                        $"A listing validation ruleset enum was not handled. Enum value: '{value}'.");
+                    throw new NotImplementedException($"A listing validation ruleset enum was not handled. Enum value: '{value}'.");
             }
         }
     }
