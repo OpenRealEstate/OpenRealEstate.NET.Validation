@@ -1,6 +1,8 @@
 using System;
 using FluentValidation;
+using OpenRealEstate.Core;
 using OpenRealEstate.Core.Rural;
+using OpenRealEstate.Validation.Extensions;
 
 namespace OpenRealEstate.Validation.Rural
 {
@@ -9,14 +11,14 @@ namespace OpenRealEstate.Validation.Rural
         /// <summary>
         /// Validates the following:
         /// <para>
-        /// Minimum (Default):
+        /// Minimum (Default) when 'Available or Unknown':
         /// - *Common Listing data
         /// - AuctionOn
         /// - Pricing
         /// - BuildingDetails
         /// </para>
         /// <para>
-        /// Normal:
+        /// Normal when 'Available or Unknown':
         /// - CategoryType
         /// </para>
         /// </summary>
@@ -24,15 +26,20 @@ namespace OpenRealEstate.Validation.Rural
         {
             RuleFor(listing => (DateTime)listing.AuctionOn)
                 .SetValidator(new ListingDateTimeValidator())
-                .When(listing => listing.AuctionOn.HasValue);
+                .When(listing => listing.AuctionOn.HasValue)
+                .WhenStatusTypeIsAvailableOrUnknown();
 
             // Can have NULL Pricing. But if it's not NULL, then check it.
-            RuleFor(listing => listing.Pricing).SetValidator(new SalePricingValidator());
+            RuleFor(listing => listing.Pricing).SetValidator(new SalePricingValidator())
+                .WhenStatusTypeIsAvailableOrUnknown();
 
             // Can have NULL building details. But if it's not NULL, then check it.
-            RuleFor(listing => listing.BuildingDetails).SetValidator(new BuildingDetailsValidator());
+            RuleFor(listing => listing.BuildingDetails).SetValidator(new BuildingDetailsValidator())
+                .WhenStatusTypeIsAvailableOrUnknown();
 
-            RuleSet(NormalRuleSetKey, () => RuleFor(listing => listing.CategoryType).NotEqual(CategoryType.Unknown));
+            RuleSet(NormalRuleSetKey, () => RuleFor(listing => listing.CategoryType)
+                .NotEqual(CategoryType.Unknown)
+                .WhenStatusTypeIsAvailableOrUnknown());
         }
     }
 }

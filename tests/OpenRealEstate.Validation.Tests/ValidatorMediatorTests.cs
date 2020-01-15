@@ -1,4 +1,4 @@
-﻿using OpenRealEstate.Core;
+using OpenRealEstate.Core;
 using OpenRealEstate.Core.Land;
 using OpenRealEstate.Core.Rental;
 using OpenRealEstate.Core.Residential;
@@ -11,45 +11,6 @@ namespace OpenRealEstate.Validation.Tests
 {
     public class ValidatorMediatorTests : TestBase
     {
-        //private const string SamplesDirectoryPath = "Sample Data\\";
-
-        //private static Listing GetListing(Type listingType)
-        //{
-        //    string fileName = null;
-        //    if (listingType == typeof(ResidentialListing))
-        //    {
-        //        fileName = $"{SamplesDirectoryPath}Residential\\REA-Residential-Current.xml";
-        //    }
-        //    else if (listingType == typeof(RentalListing))
-        //    {
-        //        fileName = $"{SamplesDirectoryPath}Rental\\REA-Rental-Current.xml";
-        //    }
-        //    else if (listingType == typeof(RuralListing))
-        //    {
-        //        fileName = $"{SamplesDirectoryPath}Rural\\REA-Rural-Current.xml";
-        //    }
-        //    else if (listingType == typeof(LandListing))
-        //    {
-        //        fileName = $"{SamplesDirectoryPath}Land\\REA-Land-Current.xml";
-        //    }
-
-        //    if (string.IsNullOrWhiteSpace(fileName))
-        //    {
-        //        throw new Exception("No valid type provided. Must be a 'Listing' type.");
-        //    }
-
-        //    return GetListing(fileName);
-        //}
-
-        //private static Listing GetListing(string fileName)
-        //{
-        //    fileName.ShouldNotBeNullOrEmpty();
-
-        //    var reaXml = File.ReadAllText(fileName);
-        //    var reaXmlTransmorgrifier = new ReaXmlTransmorgrifier();
-        //    return reaXmlTransmorgrifier.Parse(reaXml).Listings.First().Listing;
-        //}
-
         [Fact]
         public void GivenACurrentResidentialListing_Validate_ValidatesTheListingWithNoErrors()
         {
@@ -177,19 +138,6 @@ namespace OpenRealEstate.Validation.Tests
 
             // Assert.
             result.Errors.Count.ShouldBe(0);
-        }
-
-        [Fact]
-        public void GivenAWithdrawnResidentialListingWithStrictValidation_Validate_ValidatesTheListingWithNoErrors()
-        {
-            // Arrange.
-            var listing = GetListing<ResidentialListing>("Residential\\REA-Residential-Withdrawn.xml");
-
-            // Arrange.
-            var result = ValidatorMediator.Validate(listing, ListingValidatorRuleSet.Strict);
-
-            // Assert.
-            result.Errors.Count.ShouldBe(3);
         }
     }
 }

@@ -2,6 +2,7 @@ using System;
 using FluentValidation;
 using OpenRealEstate.Core;
 using OpenRealEstate.Core.Residential;
+using OpenRealEstate.Validation.Extensions;
 
 namespace OpenRealEstate.Validation.Residential
 {
@@ -10,13 +11,13 @@ namespace OpenRealEstate.Validation.Residential
         /// <summary>
         /// Validates the following:
         /// <para>
-        /// Minimum (Default):
+        /// Minimum (Default) when 'Available or Unknown':
         /// - *Common Listing data
         /// - AuctionOn
         /// - BuildingDetails
         /// </para>
         /// <para>
-        /// Normal:
+        /// Normal when 'Available or Unknown':
         /// - PropertyType
         /// - Pricing
         /// </para>
@@ -24,18 +25,22 @@ namespace OpenRealEstate.Validation.Residential
         public ResidentialListingValidator()
         {
             RuleFor(listing => (DateTime)listing.AuctionOn).SetValidator(new ListingDateTimeValidator())
-                .When(listing => listing.AuctionOn.HasValue);
+                .When(listing => listing.AuctionOn.HasValue)
+                .WhenStatusTypeIsAvailableOrUnknown();
 
             // Can have NULL building details. But if it's not NULL, then check it.
-            RuleFor(listing => listing.BuildingDetails).SetValidator(new BuildingDetailsValidator());
+            RuleFor(listing => listing.BuildingDetails).SetValidator(new BuildingDetailsValidator())
+                 .When(listing => listing.StatusType == StatusType.Available);
 
             RuleSet(NormalRuleSetKey, () =>
             {
                 // Required.
                 RuleFor(listing => listing.PropertyType).NotEqual(PropertyType.Unknown)
+                    .WhenStatusTypeIsAvailableOrUnknown()
                     .WithMessage("Invalid 'PropertyType'. Please choose any property except Unknown.");
 
-                RuleFor(listing => listing.Pricing).SetValidator(new SalePricingValidator());
+                RuleFor(listing => listing.Pricing).SetValidator(new SalePricingValidator())
+                    .WhenStatusTypeIsAvailableOrUnknown();
             });
         }
     }
