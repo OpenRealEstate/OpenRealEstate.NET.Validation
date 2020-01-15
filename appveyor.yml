@@ -1,7 +1,7 @@
 
 version: '{build}.0.0-dev'
 configuration: Release
-os: Visual Studio 2017
+os: Visual Studio 2019
 pull_requests:
   do_not_increment_build_number: true
 
@@ -29,15 +29,18 @@ before_build:
   - cmd: dotnet restore --verbosity quiet
 
 build_script:
-  - dotnet build -c %CONFIGURATION% -v minimal /p:Version=%APPVEYOR_BUILD_VERSION%
+  - dotnet build -c %CONFIGURATION% -v minimal /p:Version=%APPVEYOR_BUILD_VERSION% --no-restore
 
 test_script:
-  - dotnet test tests\OpenRealEstate.Validation.Tests -c %CONFIGURATION% -v minimal --no-restore --no-build
+  - dotnet test -c %CONFIGURATION% --no-build
   - dotnet pack -c %CONFIGURATION% /p:Version=%APPVEYOR_BUILD_VERSION% --no-build
 
 artifacts:
   - path: '**\*.nupkg'
-    name: openrealestate-nugets
+    name: nuget-packages
+    type: NuGetPackage
+  - path: '**\*.snupkg'
+    name: nuget-symbols
     type: NuGetPackage
 
 deploy:
@@ -46,7 +49,7 @@ deploy:
     api_key:
       secure: AguzfXNvHBkkDebTyWHK7o9OC5YL3eszT6u7PnzGq2G7ozdUypDlGGpcFsTRYHEc
     skip_symbols: true
-    artifact: openrealestate-nugets
+    artifact: nuget-packages
     on:
       appveyor_repo_tag: false
   - provider: NuGet
@@ -54,10 +57,7 @@ deploy:
     api_key:
       secure: AguzfXNvHBkkDebTyWHK7o9OC5YL3eszT6u7PnzGq2G7ozdUypDlGGpcFsTRYHEc
     skip_symbols: true
-    artifact: openrealestate-nugets
+    artifact: nuget-packages
     on:
       branch: master
       appveyor_repo_tag: true
-
-cache:
-  - packages -> **\packages.config
