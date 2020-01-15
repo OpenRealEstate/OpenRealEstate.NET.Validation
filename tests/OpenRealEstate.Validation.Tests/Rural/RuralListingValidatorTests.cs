@@ -1,19 +1,16 @@
-﻿using FluentValidation;
+using System;
 using FluentValidation.TestHelper;
 using OpenRealEstate.Core;
 using OpenRealEstate.Core.Rural;
 using OpenRealEstate.Validation.Rural;
-using Shouldly;
-using System;
 using Xunit;
 using RuralCategoryType = OpenRealEstate.Core.Rural.CategoryType;
 
 namespace OpenRealEstate.Validation.Tests.Rural
 {
-    public class RuralListingValidatorTests : TestBase
+    public class RuralListingValidatorTests
     {
-
-        public class SimpleValidationFacts
+        public class SimpleValidationFacts : TestBase
         {
             public SimpleValidationFacts()
             {
@@ -39,7 +36,12 @@ namespace OpenRealEstate.Validation.Tests.Rural
             [Fact]
             public void GivenAnInvalidAuctionOn_Validate_ShouldHaveAValidationError()
             {
-                _validator.ShouldHaveValidationErrorFor(listing => listing.AuctionOn, DateTime.MinValue);
+                // Arrange.
+                var listing = GetListing<RuralListing>();
+                listing.AuctionOn = DateTime.MinValue;
+
+                // Act & Assert.
+                _validator.ShouldHaveValidationErrorFor(x => x.AuctionOn, listing);
             }
 
             [Fact]
@@ -51,8 +53,13 @@ namespace OpenRealEstate.Validation.Tests.Rural
             [Fact]
             public void GivenAnUnknownCategoryType_Validate_ShouldHaveAValidationError()
             {
-                _validator.ShouldHaveValidationErrorFor(listing => listing.CategoryType,
-                                                        RuralCategoryType.Unknown,
+                // Arrange.
+                var listing = GetListing<RuralListing>();
+                listing.CategoryType = RuralCategoryType.Unknown;
+
+                // Act & Assert.
+                _validator.ShouldHaveValidationErrorFor(x => x.CategoryType,
+                                                        listing,
                                                         RuralListingValidator.NormalRuleSet);
             }
 

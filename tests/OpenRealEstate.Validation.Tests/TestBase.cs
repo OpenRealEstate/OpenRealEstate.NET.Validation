@@ -1,4 +1,4 @@
-﻿using OpenRealEstate.Core;
+using OpenRealEstate.Core;
 using OpenRealEstate.Core.Land;
 using OpenRealEstate.Core.Rental;
 using OpenRealEstate.Core.Residential;
@@ -14,6 +14,11 @@ namespace OpenRealEstate.Validation.Tests
     public abstract class TestBase
     {
         private const string SamplesDirectoryPath = "Sample Data\\";
+
+        protected const string RuleSetDefault = "default";
+        protected const string RuleSetNormal = "default, Normal";
+        protected const string RuleSetStrict = "default, Normal, Strict";
+
 
         protected T GetListing<T>() where T : Listing
         {
