@@ -1,8 +1,7 @@
-using FluentValidation;
-using OpenRealEstate.Core;
-using OpenRealEstate.Validation.Extensions;
 using System;
 using System.Linq;
+using FluentValidation;
+using OpenRealEstate.Core;
 
 namespace OpenRealEstate.Validation
 {
@@ -16,14 +15,14 @@ namespace OpenRealEstate.Validation
         /// <summary>
         /// Validates the following:
         /// <para>
-        /// Minimum (Default) when 'Available or Unknown':
+        /// Minimum (Default):
         /// - *Common data
         /// - AgencyId
         /// - StatusType
         /// - CreatedOn
         /// </para>
         /// <para>
-        /// Normal when 'Available or Unknown':
+        /// Normal:
         /// - Title
         /// - Address
         /// - Agents
@@ -35,7 +34,7 @@ namespace OpenRealEstate.Validation
         /// - Features
         /// </para>
         /// <para>
-        /// Strict when 'Available or Unknown':
+        /// Strict:
         /// - Links (Optional)</para>
         /// </summary>
         public ListingValidator()
@@ -58,42 +57,33 @@ namespace OpenRealEstate.Validation
             {
                 // Required.
                 RuleFor(listing => listing.Title)
-                    .NotEmpty()
-                    .WhenStatusTypeIsAvailableOrUnknown();
+                    .NotEmpty();
 
                 RuleFor(listing => listing.Address)
                     .NotNull()
-                    .SetValidator(new AddressValidator())
-                    .WhenStatusTypeIsAvailableOrUnknown();
+                    .SetValidator(new AddressValidator());
 
                 // Required where it exists.
                 RuleForEach(listing => listing.Agents)
-                    .SetValidator(new AgentValidator())
-                    .WhenStatusTypeIsAvailableOrUnknown();
+                    .SetValidator(new AgentValidator());
 
                 RuleForEach(listing => listing.Images)
-                    .SetValidator(new MediaValidator())
-                    .WhenStatusTypeIsAvailableOrUnknown();
+                    .SetValidator(new MediaValidator());
 
                 RuleForEach(listing => listing.FloorPlans)
-                    .SetValidator(new MediaValidator())
-                    .WhenStatusTypeIsAvailableOrUnknown();
+                    .SetValidator(new MediaValidator());
 
                 RuleForEach(listing => listing.Videos)
-                    .SetValidator(new MediaValidator())
-                    .WhenStatusTypeIsAvailableOrUnknown();
+                    .SetValidator(new MediaValidator());
 
                 RuleForEach(listing => listing.Inspections)
-                    .SetValidator(new InspectionValidator())
-                    .WhenStatusTypeIsAvailableOrUnknown();
+                    .SetValidator(new InspectionValidator());
 
                 RuleFor(listing => listing.LandDetails)
-                    .SetValidator(new LandDetailsValidator())
-                    .WhenStatusTypeIsAvailableOrUnknown();
+                    .SetValidator(new LandDetailsValidator());
 
                 RuleFor(listing => listing.Features)
-                .SetValidator(new FeaturesValidator())
-                .WhenStatusTypeIsAvailableOrUnknown();
+                .SetValidator(new FeaturesValidator());
             });
 
             // Strictest of rules to check existing properties.
@@ -103,7 +93,6 @@ namespace OpenRealEstate.Validation
                 RuleForEach(listing => listing.Links)
                     .Must(LinkMustBeAUri)
                     .When(listing => listing.Links?.Any() == true)
-                    .WhenStatusTypeIsAvailableOrUnknown()
                     .WithMessage("Link '{PropertyValue}' must be a valid URI. eg: http://www.SomeWebSite.com.au");
             });
         }

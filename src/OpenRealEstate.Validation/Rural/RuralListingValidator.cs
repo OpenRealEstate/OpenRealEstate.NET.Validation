@@ -1,8 +1,6 @@
 using System;
 using FluentValidation;
-using OpenRealEstate.Core;
 using OpenRealEstate.Core.Rural;
-using OpenRealEstate.Validation.Extensions;
 
 namespace OpenRealEstate.Validation.Rural
 {
@@ -11,14 +9,14 @@ namespace OpenRealEstate.Validation.Rural
         /// <summary>
         /// Validates the following:
         /// <para>
-        /// Minimum (Default) when 'Available or Unknown':
+        /// Minimum (Default):
         /// - *Common Listing data
         /// - AuctionOn
         /// - Pricing
         /// - BuildingDetails
         /// </para>
         /// <para>
-        /// Normal when 'Available or Unknown':
+        /// Normal:
         /// - CategoryType
         /// </para>
         /// </summary>
@@ -26,20 +24,16 @@ namespace OpenRealEstate.Validation.Rural
         {
             RuleFor(listing => (DateTime)listing.AuctionOn)
                 .SetValidator(new ListingDateTimeValidator())
-                .When(listing => listing.AuctionOn.HasValue)
-                .WhenStatusTypeIsAvailableOrUnknown();
+                .When(listing => listing.AuctionOn.HasValue);
 
             // Can have NULL Pricing. But if it's not NULL, then check it.
-            RuleFor(listing => listing.Pricing).SetValidator(new SalePricingValidator())
-                .WhenStatusTypeIsAvailableOrUnknown();
+            RuleFor(listing => listing.Pricing).SetValidator(new SalePricingValidator());
 
             // Can have NULL building details. But if it's not NULL, then check it.
-            RuleFor(listing => listing.BuildingDetails).SetValidator(new BuildingDetailsValidator())
-                .WhenStatusTypeIsAvailableOrUnknown();
+            RuleFor(listing => listing.BuildingDetails).SetValidator(new BuildingDetailsValidator());
 
             RuleSet(NormalRuleSetKey, () => RuleFor(listing => listing.CategoryType)
-                .NotEqual(CategoryType.Unknown)
-                .WhenStatusTypeIsAvailableOrUnknown());
+                .NotEqual(CategoryType.Unknown));
         }
     }
 }

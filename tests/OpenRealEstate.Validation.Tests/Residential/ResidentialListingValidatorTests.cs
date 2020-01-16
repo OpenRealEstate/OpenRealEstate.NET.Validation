@@ -135,16 +135,16 @@ namespace OpenRealEstate.Validation.Tests.Residential
             }
 
             [Theory]
-            [InlineData("default", "Residential\\REA-Residential-OffMarket.xml")]
-            [InlineData(ResidentialListingValidator.NormalRuleSet, "Residential\\REA-Residential-OffMarket.xml")]
-            [InlineData(ResidentialListingValidator.StrictRuleSet, "Residential\\REA-Residential-OffMarket.xml")]
-            [InlineData("default", "Residential\\REA-Residential-Sold.xml")]
-            [InlineData(ResidentialListingValidator.NormalRuleSet, "Residential\\REA-Residential-Sold.xml")]
-            [InlineData(ResidentialListingValidator.StrictRuleSet, "Residential\\REA-Residential-Sold.xml")]
-            [InlineData("default", "Residential\\REA-Residential-Withdrawn.xml")]
-            [InlineData(ResidentialListingValidator.NormalRuleSet, "Residential\\REA-Residential-Withdrawn.xml")]
-            [InlineData(ResidentialListingValidator.StrictRuleSet, "Residential\\REA-Residential-Withdrawn.xml")]
-            public void GivenAnREAResidentialFileThatIsNotCurrent_Validate_ShouldNotHaveValidationErrors(string ruleSet, string file)
+            [InlineData("default", "Residential\\REA-Residential-OffMarket.xml", 0)]
+            [InlineData(ResidentialListingValidator.NormalRuleSet, "Residential\\REA-Residential-OffMarket.xml", 3)]
+            [InlineData(ResidentialListingValidator.StrictRuleSet, "Residential\\REA-Residential-OffMarket.xml", 3)]
+            [InlineData("default", "Residential\\REA-Residential-Sold.xml", 0)]
+            [InlineData(ResidentialListingValidator.NormalRuleSet, "Residential\\REA-Residential-Sold.xml", 4)]
+            [InlineData(ResidentialListingValidator.StrictRuleSet, "Residential\\REA-Residential-Sold.xml", 4)]
+            [InlineData("default", "Residential\\REA-Residential-Withdrawn.xml", 0)]
+            [InlineData(ResidentialListingValidator.NormalRuleSet, "Residential\\REA-Residential-Withdrawn.xml", 3)]
+            [InlineData(ResidentialListingValidator.StrictRuleSet, "Residential\\REA-Residential-Withdrawn.xml", 3)]
+            public void GivenAnREAResidentialFileThatIsNotCurrent_Validate_ShouldNotHaveValidationErrors(string ruleSet, string file, int expectedErrorCount)
             {
                 // Arrange.
                 var validator = new ResidentialListingValidator();
@@ -154,7 +154,7 @@ namespace OpenRealEstate.Validation.Tests.Residential
                 var result = validator.Validate(listing, ruleSet: ruleSet);
 
                 // Assert.
-                result.Errors.Count.ShouldBe(0);
+                result.Errors.Count.ShouldBe(expectedErrorCount);
             }
         }
 
@@ -286,13 +286,8 @@ namespace OpenRealEstate.Validation.Tests.Residential
             [Fact]
             public void GivenAnInvalidAuctionOn_Validate_ShouldHaveAValidationError()
             {
-                // Arrange.
-                var listing = GetListing<ResidentialListing>();
-                listing.AuctionOn = DateTime.MinValue;
-
-                // Act & Assert.
                 _validator.ShouldHaveValidationErrorFor(x => x.AuctionOn,
-                                                        listing,
+                                                        DateTime.MinValue,
                                                         ResidentialListingValidator.NormalRuleSet);
             }
 
@@ -307,13 +302,8 @@ namespace OpenRealEstate.Validation.Tests.Residential
             [Fact]
             public void GivenAnUnknownPropertyType_Validate_ShouldHaveAValidationError()
             {
-                // Arrange.
-                var listing = GetListing<ResidentialListing>();
-                listing.PropertyType = PropertyType.Unknown;
-
-                // Act & Assert.
                 _validator.ShouldHaveValidationErrorFor(x => x.PropertyType,
-                                                        listing, 
+                                                        PropertyType.Unknown, 
                                                         ResidentialListingValidator.NormalRuleSet);
             }
 
