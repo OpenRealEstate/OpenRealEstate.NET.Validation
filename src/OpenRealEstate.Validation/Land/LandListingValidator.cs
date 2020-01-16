@@ -1,8 +1,6 @@
 using System;
 using FluentValidation;
-using OpenRealEstate.Core;
 using OpenRealEstate.Core.Land;
-using OpenRealEstate.Validation.Extensions;
 
 namespace OpenRealEstate.Validation.Land
 {
@@ -11,7 +9,7 @@ namespace OpenRealEstate.Validation.Land
         /// <summary>
         /// Validates the following:
         /// <para>
-        /// Minimum (Default) when 'Available or Unknown':
+        /// Minimum (Default):
         /// - *Common Listing data
         /// - AuctionOn
         /// - Pricing</para>
@@ -20,12 +18,10 @@ namespace OpenRealEstate.Validation.Land
         {
             // Can have a NULL AuctionOn date. Just can't have a MinValue one.
             RuleFor(listing => (DateTime)listing.AuctionOn).SetValidator(new ListingDateTimeValidator())
-                .When(listing => listing.AuctionOn.HasValue)
-                .WhenStatusTypeIsAvailableOrUnknown();
+                .When(listing => listing.AuctionOn.HasValue);
 
             // Can have NULL Pricing. But if it's not NULL, then check it.
-            RuleFor(listing => listing.Pricing).SetValidator(new SalePricingValidator())
-                .WhenStatusTypeIsAvailableOrUnknown();
+            RuleFor(listing => listing.Pricing).SetValidator(new SalePricingValidator());
 
             // NOTE: No rules needed for listing.LandEstate.
         }

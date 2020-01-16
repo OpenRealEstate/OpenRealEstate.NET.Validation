@@ -2,7 +2,6 @@ using System;
 using FluentValidation;
 using OpenRealEstate.Core;
 using OpenRealEstate.Core.Residential;
-using OpenRealEstate.Validation.Extensions;
 
 namespace OpenRealEstate.Validation.Residential
 {
@@ -11,13 +10,13 @@ namespace OpenRealEstate.Validation.Residential
         /// <summary>
         /// Validates the following:
         /// <para>
-        /// Minimum (Default) when 'Available or Unknown':
+        /// Minimum (Default):
         /// - *Common Listing data
         /// - AuctionOn
         /// - BuildingDetails
         /// </para>
         /// <para>
-        /// Normal when 'Available or Unknown':
+        /// Normal:
         /// - PropertyType
         /// - Pricing
         /// </para>
@@ -25,22 +24,18 @@ namespace OpenRealEstate.Validation.Residential
         public ResidentialListingValidator()
         {
             RuleFor(listing => (DateTime)listing.AuctionOn).SetValidator(new ListingDateTimeValidator())
-                .When(listing => listing.AuctionOn.HasValue)
-                .WhenStatusTypeIsAvailableOrUnknown();
+                .When(listing => listing.AuctionOn.HasValue);
 
             // Can have NULL building details. But if it's not NULL, then check it.
-            RuleFor(listing => listing.BuildingDetails).SetValidator(new BuildingDetailsValidator())
-                 .When(listing => listing.StatusType == StatusType.Available);
+            RuleFor(listing => listing.BuildingDetails).SetValidator(new BuildingDetailsValidator());
 
             RuleSet(NormalRuleSetKey, () =>
             {
                 // Required.
                 RuleFor(listing => listing.PropertyType).NotEqual(PropertyType.Unknown)
-                    .WhenStatusTypeIsAvailableOrUnknown()
                     .WithMessage("Invalid 'PropertyType'. Please choose any property except Unknown.");
 
-                RuleFor(listing => listing.Pricing).SetValidator(new SalePricingValidator())
-                    .WhenStatusTypeIsAvailableOrUnknown();
+                RuleFor(listing => listing.Pricing).SetValidator(new SalePricingValidator());
             });
         }
     }
