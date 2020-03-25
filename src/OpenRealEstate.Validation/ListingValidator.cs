@@ -76,6 +76,9 @@ namespace OpenRealEstate.Validation
                 RuleForEach(listing => listing.Videos)
                     .SetValidator(new MediaValidator());
 
+                RuleForEach(listing => listing.Documents)
+                    .SetValidator(new MediaValidator());
+
                 RuleForEach(listing => listing.Inspections)
                     .SetValidator(new InspectionValidator());
 
@@ -83,7 +86,7 @@ namespace OpenRealEstate.Validation
                     .SetValidator(new LandDetailsValidator());
 
                 RuleFor(listing => listing.Features)
-                .SetValidator(new FeaturesValidator());
+                    .SetValidator(new FeaturesValidator());
             });
 
             // Strictest of rules to check existing properties.
