@@ -19,7 +19,6 @@ namespace OpenRealEstate.Validation
                 .NotEmpty();
 
             RuleFor(media => media.Order)
-                .NotEmpty()
                 .GreaterThan(0);
         }
     }
