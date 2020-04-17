@@ -15,7 +15,7 @@ namespace OpenRealEstate.Validation.Tests
         public void GivenACurrentResidentialListing_Validate_ValidatesTheListingWithNoErrors()
         {
             // Arrange.
-            var listing = GetListing<ResidentialListing>();
+            var listing = FakeData.FakeListings.CreateAFakeResidentialListing();
 
             // Arrange.
             var result = ValidatorMediator.Validate(listing);
@@ -28,7 +28,7 @@ namespace OpenRealEstate.Validation.Tests
         public void GivenACurrentResidentialListingWithSomeRequiredMissingData_Validate_ValidatesTheListingWithSomeErrors()
         {
             // Arrange.
-            var listing = GetListing<ResidentialListing>();
+            var listing = FakeData.FakeListings.CreateAFakeResidentialListing();
             listing.Id = null;
             listing.AgencyId = null;
             listing.Pricing.SalePrice = -1;
@@ -44,7 +44,7 @@ namespace OpenRealEstate.Validation.Tests
         public void GivenALandListing_Validate_ValidatesTheListingWithNoErrors()
         {
             // Arrange.
-            var listing = GetListing<LandListing>();
+            var listing = FakeData.FakeListings.CreateAFakeLandListing();
 
             // Arrange.
             var result = ValidatorMediator.Validate(listing);
@@ -57,7 +57,7 @@ namespace OpenRealEstate.Validation.Tests
         public void GivenALandListingWithSomeRequiredMissingData_Validate_ValidatesTheListingWithSomeErrors()
         {
             // Arrange.
-            var listing = GetListing<LandListing>();
+            var listing = FakeData.FakeListings.CreateAFakeLandListing();
             listing.Id = null;
             listing.AgencyId = null;
             listing.CategoryType = LandCategoryType.Unknown; // That's allowed, now :(
@@ -73,7 +73,7 @@ namespace OpenRealEstate.Validation.Tests
         public void GivenARentalListing_Validate_ValidatesTheListingWithNoErrors()
         {
             // Arrange.
-            var listing = GetListing<RentalListing>();
+            var listing = FakeData.FakeListings.CreateAFakeRentalListing();
 
             // Arrange.
             var result = ValidatorMediator.Validate(listing);
@@ -86,7 +86,7 @@ namespace OpenRealEstate.Validation.Tests
         public void GivenARentalListingWithSomeRequiredMissingData_Validate_ValidatesTheListingWithSomeErrors()
         {
             // Arrange.
-            var listing = GetListing<RentalListing>();
+            var listing = FakeData.FakeListings.CreateAFakeRentalListing();
             listing.Id = null;
             listing.AgencyId = null;
             listing.PropertyType = PropertyType.Unknown;
@@ -102,7 +102,7 @@ namespace OpenRealEstate.Validation.Tests
         public void GivenARuralListingWithSomeRequiredMissingData_Validate_ValidatesTheListingWithSomeErrors()
         {
             // Arrange.
-            var listing = GetListing<RuralListing>();
+            var listing = FakeData.FakeListings.CreateAFakeRuralListing();
             listing.Id = null;
             listing.AgencyId = null;
             listing.Pricing.SalePrice = -1;
@@ -118,7 +118,7 @@ namespace OpenRealEstate.Validation.Tests
         public void GivenARurallListing_Validate_ValidatesTheListingWithNoErrors()
         {
             // Arrange.
-            var listing = GetListing<RuralListing>();
+            var listing = FakeData.FakeListings.CreateAFakeRuralListing();
 
             // Arrange.
             var result = ValidatorMediator.Validate(listing);
@@ -128,10 +128,10 @@ namespace OpenRealEstate.Validation.Tests
         }
 
         [Fact]
-        public void GivenAWithdrawnResidentialListing_Validate_ValidatesTheListingWithNoErrors()
+        public void GivenARemovedResidentialListing_Validate_ValidatesTheListingWithNoErrors()
         {
             // Arrange.
-            var listing = GetListing<ResidentialListing>("Residential\\REA-Residential-Withdrawn.xml");
+            var listing = FakeResidentialListing(StatusType.Removed);
 
             // Arrange.
             var result = ValidatorMediator.Validate(listing, ListingValidatorRuleSet.Minimum);

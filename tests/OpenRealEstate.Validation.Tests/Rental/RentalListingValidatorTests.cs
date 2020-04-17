@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using FluentValidation;
 using FluentValidation.TestHelper;
 using OpenRealEstate.Core.Rental;
@@ -68,7 +68,7 @@ namespace OpenRealEstate.Validation.Tests.Rental
             {
                 // Arrange.
                 var validator = new RentalListingValidator();
-                var listing = GetListing<RentalListing>();
+                var listing = FakeData.FakeListings.CreateAFakeRentalListing();
 
                 // Act.
                 var result = validator.Validate(listing, ruleSet: RentalListingValidator.NormalRuleSet);

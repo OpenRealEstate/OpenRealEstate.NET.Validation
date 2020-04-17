@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Reflection.Metadata.Ecma335;
 using FluentValidation;
 using FluentValidation.TestHelper;
 using OpenRealEstate.Core;
@@ -24,7 +25,7 @@ namespace OpenRealEstate.Validation.Tests.Residential
             {
                 // Arrange.
                 var validator = new ResidentialListingValidator();
-                var listing = GetListing<ResidentialListing>();
+                var listing = FakeData.FakeListings.CreateAFakeResidentialListing();
 
                 // Act.
                 var result = validator.Validate(listing, ruleSet: ruleSet);
@@ -42,8 +43,8 @@ namespace OpenRealEstate.Validation.Tests.Residential
             {
                 // Arrange.
                 var validator = new ResidentialListingValidator();
-                var listing = GetListing<ResidentialListing>();
-                
+                var listing = FakeData.FakeListings.CreateAFakeResidentialListing();
+
                 listing.StatusType = StatusType.Available; // Need to be available to check for errors.
 
                 listing.Id = null;
@@ -80,7 +81,7 @@ namespace OpenRealEstate.Validation.Tests.Residential
             {
                 // Arrange.
                 var validator = new ResidentialListingValidator();
-                var listing = GetListing<ResidentialListing>();
+                var listing = FakeData.FakeListings.CreateAFakeResidentialListing();
                 listing.Agents.First().Name = string.Empty;
 
                 // Act.
@@ -95,7 +96,7 @@ namespace OpenRealEstate.Validation.Tests.Residential
             {
                 // Arrange.
                 var validator = new ResidentialListingValidator();
-                var listing = GetListing<ResidentialListing>();
+                var listing = FakeData.FakeListings.CreateAFakeResidentialListing();
                 listing.Address.Suburb = null;
 
                 // Act.
@@ -110,7 +111,7 @@ namespace OpenRealEstate.Validation.Tests.Residential
             {
                 // Arrange.
                 var validator = new ResidentialListingValidator();
-                var listing = GetListing<ResidentialListing>();
+                var listing = FakeData.FakeListings.CreateAFakeResidentialListing();
                 listing.Address.Street = string.Empty;
 
                 // Act.
@@ -125,7 +126,7 @@ namespace OpenRealEstate.Validation.Tests.Residential
             {
                 // Arrange.
                 var validator = new ResidentialListingValidator();
-                var listing = GetListing<ResidentialListing>("Residential\\REA-Residential-OffMarket.xml");
+                var listing = FakeResidentialListing(StatusType.Removed);
 
                 // Act.
                 var result = validator.Validate(listing);
@@ -134,21 +135,46 @@ namespace OpenRealEstate.Validation.Tests.Residential
                 result.Errors.Count.ShouldBe(0);
             }
 
+            public static TheoryData<string, ResidentialListing, int> GetNotCurrentResidentialListingData => new TheoryData<string, ResidentialListing, int>
+            {
+                {
+                    "default",
+                    FakeResidentialListing(StatusType.Removed),
+                    0
+                },
+                {
+                    ResidentialListingValidator.NormalRuleSet,
+                    FakeResidentialListing(StatusType.Removed),
+                    3
+                },
+                {
+                    ResidentialListingValidator.StrictRuleSet,
+                    FakeResidentialListing(StatusType.Removed),
+                    3
+                },
+                {
+                    "default",
+                    FakeResidentialListing(StatusType.Sold, FakeSalePricing),
+                    0
+                },
+                {
+                    ResidentialListingValidator.NormalRuleSet,
+                    FakeResidentialListing(StatusType.Sold, FakeSalePricing),
+                    4
+                },
+                {
+                    ResidentialListingValidator.StrictRuleSet,
+                    FakeResidentialListing(StatusType.Sold, FakeSalePricing),
+                    4
+                },
+            };
+
             [Theory]
-            [InlineData("default", "Residential\\REA-Residential-OffMarket.xml", 0)]
-            [InlineData(ResidentialListingValidator.NormalRuleSet, "Residential\\REA-Residential-OffMarket.xml", 3)]
-            [InlineData(ResidentialListingValidator.StrictRuleSet, "Residential\\REA-Residential-OffMarket.xml", 3)]
-            [InlineData("default", "Residential\\REA-Residential-Sold.xml", 0)]
-            [InlineData(ResidentialListingValidator.NormalRuleSet, "Residential\\REA-Residential-Sold.xml", 4)]
-            [InlineData(ResidentialListingValidator.StrictRuleSet, "Residential\\REA-Residential-Sold.xml", 4)]
-            [InlineData("default", "Residential\\REA-Residential-Withdrawn.xml", 0)]
-            [InlineData(ResidentialListingValidator.NormalRuleSet, "Residential\\REA-Residential-Withdrawn.xml", 3)]
-            [InlineData(ResidentialListingValidator.StrictRuleSet, "Residential\\REA-Residential-Withdrawn.xml", 3)]
-            public void GivenAnREAResidentialFileThatIsNotCurrent_Validate_ShouldNotHaveValidationErrors(string ruleSet, string file, int expectedErrorCount)
+            [MemberData(nameof(GetNotCurrentResidentialListingData))]
+            public void GivenAnREAResidentialFileThatIsNotCurrent_Validate_ShouldNotHaveValidationErrors(string ruleSet, ResidentialListing listing, int expectedErrorCount)
             {
                 // Arrange.
                 var validator = new ResidentialListingValidator();
-                var listing = GetListing<ResidentialListing>(file);
 
                 // Act.
                 var result = validator.Validate(listing, ruleSet: ruleSet);
@@ -229,7 +255,7 @@ namespace OpenRealEstate.Validation.Tests.Residential
                 //    links, 
                 //    ResidentialListingValidator.NormalRuleSet);
 
-                var listing = GetListing<ResidentialListing>();
+                var listing = FakeData.FakeListings.CreateAFakeResidentialListing();
                 listing.Links = links;
 
                 var result = _validator.Validate(listing, ruleSet: ResidentialListingValidator.StrictRuleSet);

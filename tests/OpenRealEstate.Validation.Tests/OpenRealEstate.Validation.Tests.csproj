@@ -12,7 +12,7 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.5.0" />
-    <PackageReference Include="OpenRealEstate.Transmorgrifiers.RealestateComAu" Version="30.0.0-dev" />
+    <PackageReference Include="OpenRealEstate.FakeData" Version="24.0.0-dev" />
     <PackageReference Include="Shouldly" Version="3.0.2" />
     <PackageReference Include="xunit" Version="2.4.1" />
     <PackageReference Include="xunit.runner.visualstudio" Version="2.4.1">
@@ -23,36 +23,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\src\OpenRealEstate.Validation\OpenRealEstate.Validation.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <None Update="Sample Data\Land\REA-Land-Current.xml">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Update="Sample Data\Rental\REA-Rental-Current.xml">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Update="Sample Data\Residential\REA-Residential-Current.xml">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Update="Sample Data\Residential\REA-Residential-OffMarket.xml">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Update="Sample Data\Residential\REA-Residential-Sold-NoSoldPrice.xml">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Update="Sample Data\Residential\REA-Residential-Sold.xml">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Update="Sample Data\Residential\REA-Residential-Withdrawn.xml">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Update="Sample Data\Rural\REA-Rural-Current.xml">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Update="Sample Data\Rural\REA-Rural-Withdrawn.xml">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
   </ItemGroup>
 
 </Project>

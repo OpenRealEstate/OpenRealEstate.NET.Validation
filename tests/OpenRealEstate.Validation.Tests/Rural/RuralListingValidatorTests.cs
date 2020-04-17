@@ -37,7 +37,7 @@ namespace OpenRealEstate.Validation.Tests.Rural
             public void GivenAnInvalidAuctionOn_Validate_ShouldHaveAValidationError()
             {
                 // Arrange.
-                var listing = GetListing<RuralListing>();
+                var listing = FakeData.FakeListings.CreateAFakeRuralListing();
                 listing.AuctionOn = DateTime.MinValue;
 
                 // Act & Assert.
@@ -54,7 +54,7 @@ namespace OpenRealEstate.Validation.Tests.Rural
             public void GivenAnUnknownCategoryType_Validate_ShouldHaveAValidationError()
             {
                 // Arrange.
-                var listing = GetListing<RuralListing>();
+                var listing = FakeData.FakeListings.CreateAFakeRuralListing();
                 listing.CategoryType = RuralCategoryType.Unknown;
 
                 // Act & Assert.

@@ -1,63 +1,71 @@
+using System;
 using OpenRealEstate.Core;
 using OpenRealEstate.Core.Land;
 using OpenRealEstate.Core.Rental;
 using OpenRealEstate.Core.Residential;
 using OpenRealEstate.Core.Rural;
-using OpenRealEstate.Transmorgrifiers.RealEstateComAu;
-using Shouldly;
-using System;
-using System.IO;
-using System.Linq;
 
 namespace OpenRealEstate.Validation.Tests
 {
     public abstract class TestBase
     {
-        private const string SamplesDirectoryPath = "Sample Data\\";
-
-        protected const string RuleSetDefault = "default";
-        protected const string RuleSetNormal = "default, Normal";
-        protected const string RuleSetStrict = "default, Normal, Strict";
-
-
-        protected T GetListing<T>() where T : Listing
+        protected static SalePricing FakeSalePricing => new SalePricing
         {
-            string fileName = null;
-            if (typeof(T) == typeof(ResidentialListing))
-            {
-                fileName = "Residential\\REA-Residential-Current.xml";
-            }
-            else if (typeof(T) == typeof(RentalListing))
-            {
-                fileName = "Rental\\REA-Rental-Current.xml";
-            }
-            else if (typeof(T) == typeof(RuralListing))
-            {
-                fileName = "Rural\\REA-Rural-Current.xml";
-            }
-            else if (typeof(T) == typeof(LandListing))
-            {
-                fileName = "Land\\REA-Land-Current.xml";
-            }
+            SoldOn = DateTime.UtcNow.AddDays(-10),
+            SoldPrice = 580000,
+            SoldPriceText = "$580,000"
+        };
 
-            if (string.IsNullOrWhiteSpace(fileName))
-            {
-                throw new Exception("No valid type provided. Must be a 'Listing' type.");
-            }
+        protected static ResidentialListing FakeResidentialListing(StatusType statusType, SalePricing salePricing = null)
+        {
+            var listing = new ResidentialListing();
+            SetupListing(listing, statusType);
+            listing.Pricing = salePricing;
 
-            return GetListing<T>(fileName);
+            return listing;
         }
 
-        protected T GetListing<T>(string fileName) where T : Listing
+        protected static RentalListing FakeRentallListing(StatusType statusType)
         {
-            fileName.ShouldNotBeNullOrEmpty();
+            var listing = new RentalListing();
+            SetupListing(listing, statusType);
 
-            var reaXml = File.ReadAllText(SamplesDirectoryPath + fileName);
-            var reaXmlTransmorgrifier = new ReaXmlTransmorgrifier();
-            return (T) reaXmlTransmorgrifier.Parse(reaXml)
-                                            .Listings
-                                            .First()
-                                            .Listing;
+            return listing;
+        }
+
+        protected static RuralListing FakeRuralListing(StatusType statusType)
+        {
+            var listing = new RuralListing();
+            SetupListing(listing, statusType);
+
+            return listing;
+        }
+
+        protected static LandListing FakeLandListing(StatusType statusType)
+        {
+            var listing = new LandListing();
+            SetupListing(listing, statusType);
+
+            return listing;
+        }
+
+        private static void SetupListing(Listing listing, StatusType statusType)
+        {
+            if (listing is null)
+            {
+                throw new ArgumentNullException(nameof(listing));
+            }
+
+            if (statusType == StatusType.Unknown)
+            {
+                throw new ArgumentException($"'{nameof(statusType)}' should be any value -except- 'Unknown'.");
+            }
+
+            listing.Id = "FancyPants123";
+            listing.AgencyId = "ABC123";
+            listing.CreatedOn = DateTime.UtcNow.AddDays(-10);
+            listing.UpdatedOn = DateTime.UtcNow.AddDays(-10);
+            listing.StatusType = statusType;
         }
     }
 }

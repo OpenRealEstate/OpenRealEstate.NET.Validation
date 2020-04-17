@@ -1,4 +1,5 @@
-﻿using FluentValidation;
+using FluentValidation;
+using OpenRealEstate.Core;
 using OpenRealEstate.Core.Rural;
 using OpenRealEstate.Validation.Rural;
 using Shouldly;
@@ -13,7 +14,7 @@ namespace OpenRealEstate.Validation.Tests.Rural
         public void GivenAListingAndADefaultRuleSet_Validate_ShouldHaveNotHaveAnyValidationErrors()
         {
             // Arrange.
-            var listing = GetListing<RuralListing>("Rural\\REA-Rural-Withdrawn.xml");
+            var listing = FakeRuralListing(StatusType.Removed);
             var validator = new RuralListingValidator();
 
             // Act.
@@ -27,7 +28,7 @@ namespace OpenRealEstate.Validation.Tests.Rural
         public void GivenAMinimumRuleSet_Validate_ShouldNotHaveAnyValidationErrors()
         {
             // Arrange.
-            var listing = GetListing<RuralListing>();
+            var listing = FakeData.FakeListings.CreateAFakeRuralListing();
             var validator = new RuralListingValidator();
 
             // Act.
@@ -42,7 +43,7 @@ namespace OpenRealEstate.Validation.Tests.Rural
         public void GivenAnAuctionDataAndACommonRuleSet_Validate_ShouldNotHaveAnyValidationErrors()
         {
             // Arrange.
-            var listing = GetListing<RuralListing>();
+            var listing = FakeData.FakeListings.CreateAFakeRuralListing();
             var validator = new RuralListingValidator();
             listing.AuctionOn = DateTime.UtcNow;
 
@@ -58,7 +59,7 @@ namespace OpenRealEstate.Validation.Tests.Rural
         public void GivenAnInvalidAuctionDataAndACommonRuleSet_Validate_ShouldNotHaveAnyValidationErrors()
         {
             // Arrange.
-            var listing = GetListing<RuralListing>();
+            var listing = FakeData.FakeListings.CreateAFakeRuralListing();
             var validator = new RuralListingValidator();
             listing.AuctionOn = DateTime.UtcNow;
 

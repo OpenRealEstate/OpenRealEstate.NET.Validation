@@ -20,10 +20,10 @@ namespace OpenRealEstate.Validation
                 .SetValidator(new UnitOfMeasureValidator());
 
             RuleFor(land => land.Frontage)
-                .SetValidator(new UnitOfMeasureValidator());
+                .GreaterThanOrEqualTo(0);
 
             RuleForEach(land => land.Depths)
-                .SetValidator(new UnitOfMeasureValidator());
+                .SetValidator(new DepthValidator());
         }
     }
 }
