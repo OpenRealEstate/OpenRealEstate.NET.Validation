@@ -10,8 +10,7 @@ namespace OpenRealEstate.Validation
         /// <para>
         /// Minimum (Default):
         /// - Area
-        /// - Frontage
-        /// - Depths
+        /// - Sides
         /// </para>
         /// </summary>
         public LandDetailsValidator()
@@ -19,11 +18,8 @@ namespace OpenRealEstate.Validation
             RuleFor(land => land.Area)
                 .SetValidator(new UnitOfMeasureValidator());
 
-            RuleFor(land => land.Frontage)
-                .GreaterThanOrEqualTo(0);
-
-            RuleForEach(land => land.Depths)
-                .SetValidator(new DepthValidator());
+            RuleForEach(land => land.Sides)
+                .SetValidator(new SideValidator());
         }
     }
 }

@@ -1,4 +1,4 @@
-﻿using FluentValidation.TestHelper;
+using FluentValidation.TestHelper;
 using OpenRealEstate.Core;
 using Shouldly;
 using Xunit;
@@ -7,11 +7,17 @@ namespace OpenRealEstate.Validation.Tests
 {
     public class LandDetailsValidatorTests
     {
+        private readonly LandDetailsValidator _landDetailsValidator;
+
+        public LandDetailsValidatorTests()
+        {
+            _landDetailsValidator = new LandDetailsValidator();
+        }
+
         [Fact]
         public void GivenAnArea_Validate_ShouldNotHaveAValidationError()
         {
             // Arrange.
-            var validator = new LandDetailsValidator();
             var landDetails = new LandDetails
             {
                 Area = new UnitOfMeasure
@@ -22,8 +28,8 @@ namespace OpenRealEstate.Validation.Tests
             };
 
             // Act.
-            validator.ShouldHaveChildValidator(land => land.Area, typeof(UnitOfMeasureValidator));
-            var result = validator.Validate(landDetails);
+            _landDetailsValidator.ShouldHaveChildValidator(land => land.Area, typeof(UnitOfMeasureValidator));
+            var result = _landDetailsValidator.Validate(landDetails);
             //validator.ShouldHaveValidationErrorFor(land => land.Area, area);
 
             // Assert.
@@ -34,7 +40,6 @@ namespace OpenRealEstate.Validation.Tests
         public void GivenAnAreaWithNoType_Validate_ShouldHaveAValidationError()
         {
             // Arrange.
-            var validator = new LandDetailsValidator();
             var landDetails = new LandDetails
             {
                 Area = new UnitOfMeasure
@@ -45,8 +50,8 @@ namespace OpenRealEstate.Validation.Tests
             };
 
             // Act.
-            validator.ShouldHaveChildValidator(land => land.Area, typeof(UnitOfMeasureValidator));
-            var result = validator.Validate(landDetails);
+            _landDetailsValidator.ShouldHaveChildValidator(land => land.Area, typeof(UnitOfMeasureValidator));
+            var result = _landDetailsValidator.Validate(landDetails);
             //validator.ShouldHaveValidationErrorFor(land => land.Area, area);
 
             // Assert.
