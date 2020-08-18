@@ -15,12 +15,8 @@ namespace OpenRealEstate.Validation
         /// </summary>
         public SideValidator()
         {
-            RuleFor(depth => depth.Name)
+            RuleFor(side => side.Name)
                 .NotEmpty();
-
-            RuleFor(side => side.Length)
-                .NotNull()
-                .SetValidator(new UnitOfMeasureValidator());
         }
     }
 }
