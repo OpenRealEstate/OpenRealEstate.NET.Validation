@@ -24,7 +24,7 @@ namespace OpenRealEstate.Validation
 
             // Optional.
             RuleFor(salePricing => salePricing.SoldPrice)
-                .GreaterThanOrEqualTo(1)
+                .GreaterThanOrEqualTo(0)
                 .When(salePricing => salePricing.SoldPrice.HasValue);
 
             RuleFor(salePricing => (DateTime)salePricing.SoldOn)
