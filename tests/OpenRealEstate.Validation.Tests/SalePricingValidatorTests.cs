@@ -25,7 +25,6 @@ namespace OpenRealEstate.Validation.Tests
         }
 
         [Theory]
-        [InlineData(0)]
         [InlineData(-1)]
         [InlineData(int.MinValue)]
         public void GivenAnInvalidSoldPrice_Validate_ShouldHaveAValidationError(int soldPrice)
@@ -54,6 +53,7 @@ namespace OpenRealEstate.Validation.Tests
         }
 
         [Theory]
+        [InlineData(0)]
         [InlineData(1)]
         [InlineData(int.MaxValue)]
         public void GivenASoldPrice_Validate_ShouldNotHaveAValidationError(int soldPrice)
