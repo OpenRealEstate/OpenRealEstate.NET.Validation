@@ -11,7 +11,7 @@
     <PackageLicenseUrl>https://raw.githubusercontent.com/OpenRealEstate/OpenRealEstate/master/LICENSE</PackageLicenseUrl>
     <PackageProjectUrl>https://github.com/OpenRealEstate/OpenRealEstate</PackageProjectUrl>
     <PackageIconUrl>https://avatars2.githubusercontent.com/u/7205481?s=64</PackageIconUrl>
-    <RepositoryUrl>https://github.com/OpenRealEstate/OpenRealEstate</RepositoryUrl>
+    <RepositoryUrl>https://github.com/OpenRealEstate/OpenRealEstate.NET.Validation</RepositoryUrl>
     <RepositoryType>c#</RepositoryType>
 
     <!-- Optional: Publish the repository URL in the built .nupkg (in the NuSpec <Repository> element) -->
