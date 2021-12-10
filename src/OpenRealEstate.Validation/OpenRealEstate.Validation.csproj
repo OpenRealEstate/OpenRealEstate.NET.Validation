@@ -2,28 +2,19 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
+    <PackageId>OpenRealEstate.Validation</PackageId>
     <Product>OpenRealEstate - Validation</Product>
     <Authors>Justin Adler</Authors>
     <Company>OpenRealEstate</Company>
-    <Description>A nice library to validate OpenRealEstate instances.</Description>
-    <PackageTags>ore ore.net realestate openrealestate</PackageTags>
     <Copyright>2014</Copyright>
-    <PackageLicenseUrl>https://raw.githubusercontent.com/OpenRealEstate/OpenRealEstate/master/LICENSE</PackageLicenseUrl>
-    <PackageProjectUrl>https://github.com/OpenRealEstate/OpenRealEstate</PackageProjectUrl>
+    <Description>A nice library to validate OpenRealEstate instances.</Description>
+    <PackageProjectUrl>https://github.com/OpenRealEstate/OpenRealEstate.NET.Validation</PackageProjectUrl>
+    <PackageTags>ore ore.net realestate openrealestate</PackageTags>
     <PackageIconUrl>https://avatars2.githubusercontent.com/u/7205481?s=64</PackageIconUrl>
     <RepositoryUrl>https://github.com/OpenRealEstate/OpenRealEstate.NET.Validation</RepositoryUrl>
     <RepositoryType>c#</RepositoryType>
-
-    <!-- Optional: Publish the repository URL in the built .nupkg (in the NuSpec <Repository> element) -->
-    <PublishRepositoryUrl>true</PublishRepositoryUrl>
-
-    <!-- Optional: Embed source files that are not tracked by the source control manager in the PDB -->
+    <PackageLicenseFile>LICENSE.txt</PackageLicenseFile>
     <EmbedUntrackedSources>true</EmbedUntrackedSources>
-
-    <!-- Optional: Build symbol package (.snupkg) to distribute the PDB containing Source Link -->
-    <IncludeSymbols>true</IncludeSymbols>
-    <SymbolPackageFormat>snupkg</SymbolPackageFormat>
-
   </PropertyGroup>
 
   <ItemGroup>
@@ -32,7 +23,14 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
-    <PackageReference Include="OpenRealEstate.Core" Version="106.0.0-beta" />
+    <PackageReference Include="OpenRealEstate.Core" Version="111.0.0-beta" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Include="..\..\LICENSE.txt">
+      <Pack>True</Pack>
+      <PackagePath></PackagePath>
+    </None>
+  </ItemGroup>
+  
 </Project>
