@@ -18,6 +18,7 @@ namespace OpenRealEstate.Validation
         public SalePricingValidator()
         {
             // Required.
+            // (Not all agents always provide a price. Which sucks, but has to be legit)
             RuleFor(salePricing => salePricing.SalePrice)
                 .NotNull()
                 .GreaterThanOrEqualTo(0);

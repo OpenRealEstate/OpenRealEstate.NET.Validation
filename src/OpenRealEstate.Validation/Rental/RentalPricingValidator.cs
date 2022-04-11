@@ -1,4 +1,4 @@
-﻿using FluentValidation;
+using FluentValidation;
 using OpenRealEstate.Core.Rental;
 
 namespace OpenRealEstate.Validation.Rental
@@ -15,8 +15,9 @@ namespace OpenRealEstate.Validation.Rental
         /// </summary>
         public RentalPricingValidator()
         {
-            // We always need to have a rental price.
-            RuleFor(rentalPricing => rentalPricing.RentalPrice).GreaterThanOrEqualTo(1);
+            // Required.
+            // (Not all agents always provide a price. Which sucks, but has to be legit)
+            RuleFor(rentalPricing => rentalPricing.RentalPrice).GreaterThanOrEqualTo(0);
 
             // Bond is optional. If there's a price, it needs to be a positive value.
             RuleFor(rentalPricing => rentalPricing.Bond).GreaterThanOrEqualTo(0);
