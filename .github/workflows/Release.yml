@@ -35,16 +35,17 @@ jobs:
       - run: dotnet pack --configuration Release --no-build --output ./artifacts /p:version=${{ env.RELEASE_VERSION }} -p:IncludeSymbols=true -p:SymbolPackageFormat=snupkg
 
       - name: Publish artifacts
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         with:
-          path: ./artifacts/*
+          name: NuGetPackage.${{ env.VERSION_PREFIX }}-${{ env.VERSION_SUFFIX }}
+          path: ./artifacts/
 
       - name: Upload release assets
         uses: softprops/action-gh-release@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          name: NuGetPackage.${{ env.RELEASE_VERSION }}.nupkg.zip
+          name: NuGetPackage.${{ env.RELEASE_VERSION }}
           files: ./artifacts/*
 
       - name: Publish to GPR
