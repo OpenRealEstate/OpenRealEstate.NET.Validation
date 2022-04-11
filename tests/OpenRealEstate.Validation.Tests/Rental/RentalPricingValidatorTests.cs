@@ -1,4 +1,4 @@
-﻿using FluentValidation.TestHelper;
+using FluentValidation.TestHelper;
 using OpenRealEstate.Validation.Rental;
 using Xunit;
 
@@ -31,7 +31,6 @@ namespace OpenRealEstate.Validation.Tests.Rental
         }
 
         [Theory]
-        [InlineData(0)]
         [InlineData(-1)]
         [InlineData(int.MinValue)]
         public void GivenAnInvalidRentalPrice_Validate_ShouldHaveAValidationError(int rentalPrice)
