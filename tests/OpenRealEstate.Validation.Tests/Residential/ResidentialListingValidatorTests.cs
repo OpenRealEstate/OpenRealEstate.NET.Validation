@@ -160,12 +160,12 @@ namespace OpenRealEstate.Validation.Tests.Residential
                 {
                     ResidentialListingValidator.NormalRuleSet,
                     FakeResidentialListing(StatusType.Sold, FakeSalePricing),
-                    4
+                    3
                 },
                 {
                     ResidentialListingValidator.StrictRuleSet,
                     FakeResidentialListing(StatusType.Sold, FakeSalePricing),
-                    4
+                    3
                 },
             };
 

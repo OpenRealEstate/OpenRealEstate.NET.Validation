@@ -20,7 +20,7 @@ namespace OpenRealEstate.Validation
             // Required.
             RuleFor(salePricing => salePricing.SalePrice)
                 .NotNull()
-                .GreaterThanOrEqualTo(1);
+                .GreaterThanOrEqualTo(0);
 
             // Optional.
             RuleFor(salePricing => salePricing.SoldPrice)

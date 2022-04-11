@@ -16,7 +16,6 @@ namespace OpenRealEstate.Validation.Tests
         private readonly SalePricingValidator _salePricingValidator;
 
         [Theory]
-        [InlineData(0)]
         [InlineData(-1)]
         [InlineData(int.MinValue)]
         public void GivenAnInvalidSalePrice_Validate_ShouldHaveAValidationError(int salePrice)
