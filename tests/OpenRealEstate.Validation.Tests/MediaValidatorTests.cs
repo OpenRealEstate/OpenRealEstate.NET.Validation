@@ -1,4 +1,4 @@
-﻿using FluentValidation.TestHelper;
+using FluentValidation.TestHelper;
 using Xunit;
 
 namespace OpenRealEstate.Validation.Tests
@@ -40,6 +40,27 @@ namespace OpenRealEstate.Validation.Tests
         public void GivenNoUrl_Validate_ShouldHaveAValidationError()
         {
             _mediaValidator.ShouldHaveValidationErrorFor(media => media.Url, "");
+        }
+
+        [Fact]
+        public void GivenAnId_Validate_ShouldNotHaveAValidationError()
+        {
+            const string validId = "a";
+            _mediaValidator.ShouldNotHaveValidationErrorFor(media => media.Id, validId);
+        }
+
+        [Fact]
+        public void GivenNullId_Validate_ShouldHaveAValidationError()
+        {
+            const string nullId = null;
+            _mediaValidator.ShouldHaveValidationErrorFor(media => media.Id, nullId);
+        }
+
+        [Fact]
+        public void GivenEmptyId_Validate_ShouldHaveAValidationError()
+        {
+            const string emptyId = "";
+            _mediaValidator.ShouldHaveValidationErrorFor(media => media.Id, emptyId);
         }
     }
 }
