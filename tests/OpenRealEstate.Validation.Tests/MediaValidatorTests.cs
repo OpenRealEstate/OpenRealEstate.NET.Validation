@@ -49,18 +49,12 @@ namespace OpenRealEstate.Validation.Tests
             _mediaValidator.ShouldNotHaveValidationErrorFor(media => media.Id, validId);
         }
 
-        [Fact]
-        public void GivenNullId_Validate_ShouldHaveAValidationError()
+        [Theory]
+        [InlineData(null)]
+        [InlineData("")]
+        public void GivenNullId_Validate_ShouldHaveAValidationError(string id)
         {
-            const string nullId = null;
-            _mediaValidator.ShouldHaveValidationErrorFor(media => media.Id, nullId);
-        }
-
-        [Fact]
-        public void GivenEmptyId_Validate_ShouldHaveAValidationError()
-        {
-            const string emptyId = "";
-            _mediaValidator.ShouldHaveValidationErrorFor(media => media.Id, emptyId);
+            _mediaValidator.ShouldHaveValidationErrorFor(media => media.Id, id);
         }
     }
 }
