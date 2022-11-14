@@ -45,8 +45,8 @@ namespace OpenRealEstate.Validation.Tests
         [Fact]
         public void GivenAnId_Validate_ShouldNotHaveAValidationError()
         {
-            const string validId = "a";
-            _mediaValidator.ShouldNotHaveValidationErrorFor(media => media.Id, validId);
+            _mediaValidator.ShouldNotHaveValidationErrorFor(media => media.Id, "a");
+
         }
 
         [Theory]
