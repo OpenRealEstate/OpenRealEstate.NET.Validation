@@ -9,12 +9,16 @@ namespace OpenRealEstate.Validation
         /// Validates the following:
         /// <para>
         /// Minimum (Default):
+        /// - Id
         /// - Url
         /// - Order
         /// </para>
         /// </summary>
         public MediaValidator()
         {
+            RuleFor(media => media.Id)
+                .NotEmpty();
+
             RuleFor(media => media.Url)
                 .NotEmpty();
 
