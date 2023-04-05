@@ -1,19 +1,17 @@
-using FluentValidation.TestHelper;
-using OpenRealEstate.Core;
-using Shouldly;
 using System;
+using FluentValidation.TestHelper;
 using Xunit;
 
 namespace OpenRealEstate.Validation.Tests
 {
     public class SalePricingValidatorTests
     {
+        private readonly SalePricingValidator _salePricingValidator;
+
         public SalePricingValidatorTests()
         {
             _salePricingValidator = new SalePricingValidator();
         }
-
-        private readonly SalePricingValidator _salePricingValidator;
 
         [Theory]
         [InlineData(-1)]
