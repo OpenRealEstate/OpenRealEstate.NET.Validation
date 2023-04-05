@@ -30,7 +30,7 @@ namespace OpenRealEstate.Validation.Rental
             // Can have NULL building details. But if it's not NULL, then check it.
             RuleFor(listing => listing.BuildingDetails).SetValidator(new BuildingDetailsValidator());
 
-            RuleSet(NormalRuleSetKey, () =>
+            RuleSet(RuleSetKeys.NormalRuleSetKey, () =>
             {
                 // Required.
                 RuleFor(listing => listing.PropertyType).NotEqual(PropertyType.Unknown);

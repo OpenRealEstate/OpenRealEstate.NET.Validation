@@ -30,9 +30,9 @@ namespace OpenRealEstate.Validation
                 case ListingValidatorRuleSet.Minimum:
                     return "default";
                 case ListingValidatorRuleSet.Normal:
-                    return ListingValidator<ResidentialListing>.NormalRuleSet;
+                    return RuleSetKeys.NormalRuleSet;
                 case ListingValidatorRuleSet.Strict:
-                    return ListingValidator<ResidentialListing>.StrictRuleSet;
+                    return RuleSetKeys.StrictRuleSet;
                 default:
                     throw new NotImplementedException($"A listing validation ruleset enum was not handled. Enum value: '{value}'.");
             }

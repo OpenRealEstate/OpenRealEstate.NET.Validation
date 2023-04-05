@@ -7,10 +7,7 @@ namespace OpenRealEstate.Validation
 {
     public class ListingValidator<T> : AggregateRootValidator<T> where T : Listing
     {
-        public const string NormalRuleSet = "default," + NormalRuleSetKey;
-        public const string StrictRuleSet = NormalRuleSet + "," + StrictRuleSetKey;
-        protected const string NormalRuleSetKey = "Normal";
-        protected const string StrictRuleSetKey = "Strict";
+        
 
         /// <summary>
         /// Validates the following:
@@ -53,7 +50,7 @@ namespace OpenRealEstate.Validation
             RuleFor(listing => listing.CreatedOn).SetValidator(new ListingDateTimeValidator());
 
             // Normal rules to check, when we have a property to check.
-            RuleSet(NormalRuleSetKey, () =>
+            RuleSet(RuleSetKeys.NormalRuleSetKey, () =>
             {
                 // Required.
                 RuleFor(listing => listing.Title)
@@ -90,7 +87,7 @@ namespace OpenRealEstate.Validation
             });
 
             // Strictest of rules to check existing properties.
-            RuleSet(StrictRuleSetKey, () =>
+            RuleSet(RuleSetKeys.StrictRuleSetKey, () =>
             {
                 // Required where it exists.
                 RuleForEach(listing => listing.Links)

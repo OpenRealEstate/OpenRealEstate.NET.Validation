@@ -24,7 +24,7 @@ namespace OpenRealEstate.Validation.Tests.Rural
             {
                 _validator.ShouldNotHaveValidationErrorFor(listing => listing.CategoryType,
                                                            RuralCategoryType.Cropping,
-                                                           RuralListingValidator.NormalRuleSet);
+                                                           RuleSetKeys.NormalRuleSet);
             }
 
             [Fact]
@@ -60,7 +60,7 @@ namespace OpenRealEstate.Validation.Tests.Rural
                 // Act & Assert.
                 _validator.ShouldHaveValidationErrorFor(x => x.CategoryType,
                                                         listing,
-                                                        RuralListingValidator.NormalRuleSet);
+                                                        RuleSetKeys.NormalRuleSet);
             }
 
             [Fact]

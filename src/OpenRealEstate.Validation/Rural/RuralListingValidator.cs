@@ -32,7 +32,7 @@ namespace OpenRealEstate.Validation.Rural
             // Can have NULL building details. But if it's not NULL, then check it.
             RuleFor(listing => listing.BuildingDetails).SetValidator(new BuildingDetailsValidator());
 
-            RuleSet(NormalRuleSetKey, () => RuleFor(listing => listing.CategoryType)
+            RuleSet(RuleSetKeys.NormalRuleSetKey, () => RuleFor(listing => listing.CategoryType)
                 .NotEqual(CategoryType.Unknown));
         }
     }

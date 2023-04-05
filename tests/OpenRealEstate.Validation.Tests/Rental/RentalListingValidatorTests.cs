@@ -48,7 +48,7 @@ namespace OpenRealEstate.Validation.Tests.Rental
 
                 // Act.
                 var result = validator.Validate(new RentalListing(),
-                                                ruleSet: RentalListingValidator.NormalRuleSet);
+                                                ruleSet: RuleSetKeys.NormalRuleSet);
 
                 // Assert.
                 result.Errors.Count.ShouldBe(9);
@@ -71,7 +71,7 @@ namespace OpenRealEstate.Validation.Tests.Rental
                 var listing = FakeData.FakeListings.CreateAFakeRentalListing();
 
                 // Act.
-                var result = validator.Validate(listing, ruleSet: RentalListingValidator.NormalRuleSet);
+                var result = validator.Validate(listing, ruleSet: RuleSetKeys.NormalRuleSet);
 
                 // Assert.
                 result.Errors.Count.ShouldBe(0);

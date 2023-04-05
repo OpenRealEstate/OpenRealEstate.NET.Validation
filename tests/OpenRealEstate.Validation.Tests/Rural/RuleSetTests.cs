@@ -33,7 +33,7 @@ namespace OpenRealEstate.Validation.Tests.Rural
 
             // Act.
             var result = validator.Validate(listing,
-                                            ruleSet: RuralListingValidator.NormalRuleSet);
+                                            ruleSet: RuleSetKeys.NormalRuleSet);
 
             // Assert.
             result.Errors.Count.ShouldBe(0);
@@ -49,7 +49,7 @@ namespace OpenRealEstate.Validation.Tests.Rural
 
             // Act.
             var result = validator.Validate(listing,
-                                            ruleSet: RuralListingValidator.NormalRuleSet);
+                                            ruleSet: RuleSetKeys.NormalRuleSet);
 
             // Assert.
             result.Errors.Count.ShouldBe(0);
@@ -65,7 +65,7 @@ namespace OpenRealEstate.Validation.Tests.Rural
 
             // Act.
             var result = validator.Validate(listing,
-                                            ruleSet: RuralListingValidator.NormalRuleSet);
+                                            ruleSet: RuleSetKeys.NormalRuleSet);
 
             // Assert.
             result.Errors.Count.ShouldBe(0);

@@ -7,6 +7,7 @@ using FluentValidation;
 using FluentValidation.TestHelper;
 using OpenRealEstate.Core;
 using OpenRealEstate.Core.Residential;
+using OpenRealEstate.Validation.Rental;
 using OpenRealEstate.Validation.Residential;
 using Shouldly;
 using Xunit;
@@ -19,8 +20,8 @@ namespace OpenRealEstate.Validation.Tests.Residential
         {
             [Theory]
             [InlineData("default")]
-            [InlineData(ResidentialListingValidator.NormalRuleSet)]
-            [InlineData(ResidentialListingValidator.StrictRuleSet)]
+            [InlineData(RuleSetKeys.NormalRuleSet)]
+            [InlineData(RuleSetKeys.StrictRuleSet)]
             public void GivenTheFileREAResidentialCurrentXml_Validate_ShouldNotHaveValidationErrors(string ruleSet)
             {
                 // Arrange.
@@ -36,8 +37,8 @@ namespace OpenRealEstate.Validation.Tests.Residential
 
             [Theory]
             [InlineData("default", 4)] // Aggregate root x2 + Listing x3.
-            [InlineData(ResidentialListingValidator.NormalRuleSet, 11)] // default + 9
-            [InlineData(ResidentialListingValidator.StrictRuleSet, 12)] // Normal + 1
+            [InlineData(RuleSetKeys.NormalRuleSet, 11)] // default + 9
+            [InlineData(RuleSetKeys.StrictRuleSet, 12)] // Normal + 1
             public void GivenAnIncompleteListingAndARuleSet_Validate_ShouldHaveValidationErrors(string ruleSet,
                                                                                                 int numberOfErrors)
             {
@@ -85,7 +86,7 @@ namespace OpenRealEstate.Validation.Tests.Residential
                 listing.Agents.First().Name = string.Empty;
 
                 // Act.
-                var result = validator.Validate(listing, ruleSet: ResidentialListingValidator.NormalRuleSet);
+                var result = validator.Validate(listing, ruleSet: RuleSetKeys.NormalRuleSet);
 
                 // Assert.
                 result.Errors.ShouldContain(x => x.PropertyName == "Agents[0].Name");
@@ -100,7 +101,7 @@ namespace OpenRealEstate.Validation.Tests.Residential
                 listing.Address.Suburb = null;
 
                 // Act.
-                var result = validator.Validate(listing, ruleSet: ResidentialListingValidator.NormalRuleSet);
+                var result = validator.Validate(listing, ruleSet: RuleSetKeys.NormalRuleSet);
 
                 // Assert.
                 result.Errors.ShouldContain(x => x.PropertyName == "Address.Suburb");
@@ -115,7 +116,7 @@ namespace OpenRealEstate.Validation.Tests.Residential
                 listing.Address.Street = string.Empty;
 
                 // Act.
-                var result = validator.Validate(listing, ruleSet: ResidentialListingValidator.NormalRuleSet);
+                var result = validator.Validate(listing, ruleSet: RuleSetKeys.NormalRuleSet);
 
                 // Assert.
                 result.Errors.ShouldContain(x => x.PropertyName == "Address.Street");
@@ -143,12 +144,12 @@ namespace OpenRealEstate.Validation.Tests.Residential
                     0
                 },
                 {
-                    ResidentialListingValidator.NormalRuleSet,
+                    RuleSetKeys.NormalRuleSet,
                     FakeResidentialListing(StatusType.Removed),
                     3
                 },
                 {
-                    ResidentialListingValidator.StrictRuleSet,
+                    RuleSetKeys.StrictRuleSet,
                     FakeResidentialListing(StatusType.Removed),
                     3
                 },
@@ -158,12 +159,12 @@ namespace OpenRealEstate.Validation.Tests.Residential
                     0
                 },
                 {
-                    ResidentialListingValidator.NormalRuleSet,
+                    RuleSetKeys.NormalRuleSet,
                     FakeResidentialListing(StatusType.Sold, FakeSalePricing),
                     3
                 },
                 {
-                    ResidentialListingValidator.StrictRuleSet,
+                    RuleSetKeys.StrictRuleSet,
                     FakeResidentialListing(StatusType.Sold, FakeSalePricing),
                     3
                 },
@@ -224,7 +225,7 @@ namespace OpenRealEstate.Validation.Tests.Residential
                 };
 
                 var result = _validator.Validate(listing,
-                                                 ruleSet: ResidentialListingValidator.NormalRuleSet);
+                                                 ruleSet: RuleSetKeys.NormalRuleSet);
 
                 // Assert.
                 result.Errors.ShouldNotContain(x =>
@@ -258,7 +259,7 @@ namespace OpenRealEstate.Validation.Tests.Residential
                 var listing = FakeData.FakeListings.CreateAFakeResidentialListing();
                 listing.Links = links;
 
-                var result = _validator.Validate(listing, ruleSet: ResidentialListingValidator.StrictRuleSet);
+                var result = _validator.Validate(listing, ruleSet: RuleSetKeys.StrictRuleSet);
 
                 // Assert.
                 result.Errors.ShouldContain(x => x.ErrorMessage == $"Link '{uri}' must be a valid URI. eg: http://www.SomeWebSite.com.au");
@@ -279,7 +280,7 @@ namespace OpenRealEstate.Validation.Tests.Residential
                 // Act & Assert.
                 validator.ShouldNotHaveValidationErrorFor(listing => listing.Links,
                                                           links,
-                                                          ResidentialListingValidator.NormalRuleSet);
+                                                          RuleSetKeys.NormalRuleSet);
             }
 
             [Fact]
@@ -298,7 +299,7 @@ namespace OpenRealEstate.Validation.Tests.Residential
                 // Act & Assert.
                 validator.ShouldNotHaveValidationErrorFor(listing => listing.Links,
                                                           links,
-                                                          ResidentialListingValidator.NormalRuleSet);
+                                                          RuleSetKeys.NormalRuleSet);
             }
 
             [Fact]
@@ -306,7 +307,7 @@ namespace OpenRealEstate.Validation.Tests.Residential
             {
                 _validator.ShouldNotHaveValidationErrorFor(listing => listing.AuctionOn,
                                                            DateTime.UtcNow,
-                                                           ResidentialListingValidator.NormalRuleSet);
+                                                           RuleSetKeys.NormalRuleSet);
             }
 
             [Fact]
@@ -314,7 +315,7 @@ namespace OpenRealEstate.Validation.Tests.Residential
             {
                 _validator.ShouldHaveValidationErrorFor(x => x.AuctionOn,
                                                         DateTime.MinValue,
-                                                        ResidentialListingValidator.NormalRuleSet);
+                                                        RuleSetKeys.NormalRuleSet);
             }
 
             [Fact]
@@ -322,15 +323,15 @@ namespace OpenRealEstate.Validation.Tests.Residential
             {
                 _validator.ShouldNotHaveValidationErrorFor(listing => listing.AuctionOn,
                                                            (DateTime?) null,
-                                                           ResidentialListingValidator.NormalRuleSet);
+                                                           RuleSetKeys.NormalRuleSet);
             }
 
             [Fact]
             public void GivenAnUnknownPropertyType_Validate_ShouldHaveAValidationError()
             {
                 _validator.ShouldHaveValidationErrorFor(x => x.PropertyType,
-                                                        PropertyType.Unknown, 
-                                                        ResidentialListingValidator.NormalRuleSet);
+                                                        PropertyType.Unknown,
+                                                        RuleSetKeys.NormalRuleSet);
             }
 
             [Fact]
@@ -338,7 +339,7 @@ namespace OpenRealEstate.Validation.Tests.Residential
             {
                 _validator.ShouldNotHaveValidationErrorFor(listing => listing.PropertyType,
                                                            PropertyType.Townhouse,
-                                                           ResidentialListingValidator.NormalRuleSet);
+                                                           RuleSetKeys.NormalRuleSet);
             }
         }
     }

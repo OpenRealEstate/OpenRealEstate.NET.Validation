@@ -51,7 +51,7 @@ namespace OpenRealEstate.Validation
         }
 
         public static ValidationResult Validate(ResidentialListing residentialListing, 
-                                                string ruleSet = ResidentialListingValidator.NormalRuleSet)
+                                                string ruleSet = RuleSetKeys.NormalRuleSet)
         {
             var validator = new ResidentialListingValidator();
             return string.IsNullOrWhiteSpace(ruleSet)
@@ -60,7 +60,7 @@ namespace OpenRealEstate.Validation
         }
 
         public static ValidationResult Validate(RentalListing rentalListing, 
-                                                string ruleSet = RentalListingValidator.NormalRuleSet)
+                                                string ruleSet = RuleSetKeys.NormalRuleSet)
         {
             var validator = new RentalListingValidator();
             return string.IsNullOrWhiteSpace(ruleSet)
@@ -69,7 +69,7 @@ namespace OpenRealEstate.Validation
         }
 
         public static ValidationResult Validate(RuralListing ruralListing, 
-                                                string ruleSet = RuralListingValidator.NormalRuleSet)
+                                                string ruleSet = RuleSetKeys.NormalRuleSet)
         {
             var validator = new RuralListingValidator();
             return string.IsNullOrWhiteSpace(ruleSet)
@@ -78,7 +78,7 @@ namespace OpenRealEstate.Validation
         }
 
         public static ValidationResult Validate(LandListing landListing, 
-                                                string ruleSet = ResidentialListingValidator.NormalRuleSet)
+                                                string ruleSet = RuleSetKeys.NormalRuleSet)
         {
             var validator = new LandListingValidator();
             return string.IsNullOrWhiteSpace(ruleSet)
