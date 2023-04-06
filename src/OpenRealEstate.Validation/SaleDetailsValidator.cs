@@ -16,7 +16,8 @@ namespace OpenRealEstate.Validation
         /// </summary>
         public SaleDetailsValidator()
         {
-            RuleFor(saleDetails => (DateTime)saleDetails.AuctionOn).SetValidator(new ListingDateTimeValidator())
+            RuleFor(saleDetails => (DateTime)saleDetails.AuctionOn)
+                .SetValidator(new ListingDateTimeValidator())
                 .When(saleDetails => saleDetails.AuctionOn.HasValue);
 
             RuleFor(saleDetails => saleDetails.YearBuilt)
@@ -32,7 +33,8 @@ namespace OpenRealEstate.Validation
             RuleSet(RuleSetKeys.NormalRuleSetKey, () =>
             {
                 // Required.
-                RuleFor(saleDetails => saleDetails.Pricing).SetValidator(new SalePricingValidator());
+                RuleFor(saleDetails => saleDetails.Pricing)
+                    .SetValidator(new SalePricingValidator());
             });
         }
 }
